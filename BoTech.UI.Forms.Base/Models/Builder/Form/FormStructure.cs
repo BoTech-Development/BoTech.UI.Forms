@@ -10,12 +10,16 @@ namespace BoTech.UI.Forms.Base.Models.Builder.Form;
 /// </summary>
 public class FormStructure
 {
+    /// <summary>
+    /// Instance of the current FormViewModel is needed to save all data that the user entered in the form
+    /// </summary>
+    public FormViewModelBase Instance { get; set; }
     public NestedFormViewModelDeclaration ReferencedViewModelDeclaration { get; set; }
     /// <summary>
     /// All Inputs for this part of the Form.
-    /// They will be safed separately to make it easier to access the <see cref="FormInput.GetResult">GetResult</see> Methods.
+    /// They will be safed separately to make it easier to access the <see cref="FormInput.Result">Result</see> Property.
     /// </summary>
-    public List<FormInput> FormInputs { get; set; } = new List<FormInput>();
+    public Dictionary<FormProperty, FormInput> FormInputs { get; set; } = new Dictionary<FormProperty, FormInput>();
     /// <summary>
     /// The Name of the Form. This Text will be placed above this Group.
     /// </summary>

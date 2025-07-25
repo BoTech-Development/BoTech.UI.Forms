@@ -35,6 +35,7 @@ public class FormBuilder
             ViewModelType = type,
         };
         AddGroupInformation(nestedFormViewModelDeclaration, type);
+        AddFormResultProperties(nestedFormViewModelDeclaration, type);
         AddDeclaredFormProperties(nestedFormViewModelDeclaration, type);
         // Make a recursion step
         List<Type> nestedClasses = type.GetNestedTypes().ToList();
@@ -45,6 +46,22 @@ public class FormBuilder
         return nestedFormViewModelDeclaration;
     }
 
+    private void AddFormResultProperties(NestedFormViewModelDeclaration nestedFormViewModelDeclaration, Type type)
+    {
+        foreach (PropertyInfo property in type.GetProperties())
+        {
+            List<object> annotations = property.GetCustomAttributes(typeof(FormResultProperty), false).ToList();
+            if (annotations.Count == 1)
+            {
+                nestedFormViewModelDeclaration.FormResultProperties.Add(property);
+            }
+        }
+    }
+    /// <summary>
+    /// Adda all properties that have a PropertyInfor Annotation to the List declared Properties
+    /// </summary>
+    /// <param name="nestedFormViewModelDeclaration"></param>
+    /// <param name="type"></param>
     private void AddDeclaredFormProperties(NestedFormViewModelDeclaration nestedFormViewModelDeclaration, Type type)
     {
         foreach (PropertyInfo property in type.GetProperties())

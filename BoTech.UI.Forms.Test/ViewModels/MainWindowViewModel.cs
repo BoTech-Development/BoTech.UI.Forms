@@ -2,7 +2,7 @@
 using BoTech.UI.Controls.Forms;
 using BoTech.UI.Forms.Base;
 using BoTech.UI.Forms.Base.Controls;
-
+using BoTech.UI.Forms.Base.Models;
 using ReactiveUI;
 
 namespace BoTech.UI.Forms.Test.ViewModels;
@@ -28,7 +28,19 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         FormControl form = new FormBuilder().CreateFormFor(new DemoFormViewModel());
+        form.OnFormAccepted += OnFormAccepted;
+        form.OnFormCancelled += OnFormCancelled;
         FormControl = form;
         TestControl = new TextFormInput("FirstName", "The First Name", "Florian");
+    }
+
+    private void OnFormCancelled(FormViewModelBase currentStatus)
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    private void OnFormAccepted(FormViewModelBase result)
+    {
+        //throw new System.NotImplementedException();
     }
 }

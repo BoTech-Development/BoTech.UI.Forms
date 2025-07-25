@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Avalonia" Version="11.3.2" />
-      <PackageReference Include="BoTech.UI" Version="1.0.3-alpha" />
+      <PackageReference Include="BoTech.UI" Version="1.0.7-alpha" />
       <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
     </ItemGroup>
 

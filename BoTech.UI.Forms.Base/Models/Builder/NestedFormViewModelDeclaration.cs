@@ -1,4 +1,5 @@
-﻿using BoTech.UI.Forms.Base.Models.PropertyAnnotations;
+﻿using System.Reflection;
+using BoTech.UI.Forms.Base.Models.PropertyAnnotations;
 
 namespace BoTech.UI.Forms.Base.Models.Builder;
 /// <summary>
@@ -14,14 +15,15 @@ public class NestedFormViewModelDeclaration
     /// Type of the current Class
     /// </summary>
     public Type ViewModelType { get; set; }
-    /// <summary>
-    /// Instance of the current FormViewModel is needed to save all data that the user entered in the form
-    /// </summary>
-    public FormViewModelBase Instance { get; set; }
+
     /// <summary>
     /// All properties that need an input elemnt.
     /// </summary>
     public List<FormProperty> DeclaredFormProperties { get; set; } = new List<FormProperty>();
+    /// <summary>
+    /// Saves all properties that are used to inject the instance of the SubClasses.
+    /// </summary>
+    public List<PropertyInfo> FormResultProperties { get; set; } = new List<PropertyInfo>();
     /// <summary>
     /// Save all information about the current group, such as the displayed name of the form group.
     /// </summary>

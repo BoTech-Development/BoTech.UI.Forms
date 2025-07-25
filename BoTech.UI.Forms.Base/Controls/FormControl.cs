@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System.Reflection;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
@@ -74,7 +75,7 @@ public class FormControl : ContentControl
 
     private void OnCancelButtonClick(object? sender, RoutedEventArgs e)
     {
-        //OnFormCancelled.Invoke();
+        OnFormCancelled.Invoke(CreateViewModelFromInput(ParentFormStructure, null));
     }
 
     private Button CreatSubmitButton()
@@ -104,13 +105,61 @@ public class FormControl : ContentControl
 
     private void OnSubmitButtonClick(object? sender, RoutedEventArgs e)
     {
-        //OnFormAccepted.Invoke();
+        OnFormAccepted.Invoke(CreateViewModelFromInput(ParentFormStructure, null));
     }
-
-    private FormViewModelBase CreateViewModelFromInput(FormStructure formStructure)
+    /// <summary>
+    /// Creates all ViewModels for each FormStruture and injects all Results of the InputControls into the ViewModel.
+    /// </summary>
+    /// <param name="formStructure"></param>
+    /// <param name="parent"></param>
+    /// <returns></returns>
+    private FormViewModelBase CreateViewModelFromInput(FormStructure formStructure, FormStructure? parent)
+    {   
+        FormViewModelBase result = CreateViewModelAndPopulate(formStructure);
+        // When parent is null, this formStructure is already the parent
+        if(parent != null) InjectViewModelInstanceIntoResultProperty(result, formStructure, parent);
+        foreach (FormStructure subGroup in formStructure.SubGroups)
+        {
+            CreateViewModelFromInput(subGroup, formStructure);
+        }
+        return result;
+    }
+    /// <summary>
+    /// Saves the current ViewModel (A nested class in the parent ViewModel) in the FormResultProperty marked Property.
+    /// </summary>
+    /// <param name="viewModel">The sub ViewModel</param>
+    /// <param name="formStructure">The nested class</param>
+    /// <param name="parent">The parent model.</param>
+    private void InjectViewModelInstanceIntoResultProperty(FormViewModelBase viewModel, FormStructure formStructure, FormStructure parent)
     {
-        //formStructure.ReferencedViewModelDeclaration.DeclaredFormProperti
-        return null;
+        foreach (PropertyInfo formResultProperty in parent.ReferencedViewModelDeclaration.FormResultProperties)
+        {
+            if (formResultProperty.PropertyType == formStructure.ReferencedViewModelDeclaration.ViewModelType)
+            {
+                formResultProperty.SetValue(ParentFormStructure.Instance, viewModel);
+                return;
+            }
+        }
+    }
+    /// <summary>
+    /// Creates an Instance of the ViewModel for the FormStructure and populates all Properties with the Result Values of the Input Controls.
+    /// </summary>
+    /// <param name="formStructure"></param>
+    /// <returns>The created FormViewModel.</returns>
+    private FormViewModelBase CreateViewModelAndPopulate(FormStructure formStructure)
+    {
+        FormViewModelBase viewModel = (FormViewModelBase)Activator.CreateInstance(formStructure.ReferencedViewModelDeclaration.ViewModelType);
+        foreach (FormProperty formProperty in  formStructure.ReferencedViewModelDeclaration.DeclaredFormProperties)
+        {
+            if (formStructure.FormInputs.ContainsKey(formProperty))
+            {
+                FormInput inputControl = formStructure.FormInputs[formProperty];
+                object? value = Convert.ChangeType(inputControl.Result, formProperty.Property.PropertyType);
+                formProperty.Property.SetValue(viewModel, value);
+            }
+        }
+        formStructure.Instance = viewModel;
+        return viewModel;
     }
 
     /// <summary>
@@ -135,6 +184,7 @@ public class FormControl : ContentControl
         FormStructure? parent)
     {
         FormStructure structure = new FormStructure();
+        structure.ReferencedViewModelDeclaration = nestedFormViewModelDeclaration;
         bool isStackPanel = InitializeFormStructure(nestedFormViewModelDeclaration, structure);
         CreateFormInputs(nestedFormViewModelDeclaration, structure, isStackPanel);
         // Recursion
@@ -216,7 +266,7 @@ public class FormControl : ContentControl
         foreach (FormProperty formProperty in nestedFormViewModelDeclaration.DeclaredFormProperties)
         {
             FormInput input = CreateInputElementFromFormProperty(formProperty, formProperty.Annotation.DefaultValue);
-            structure.FormInputs.Add(input);
+            structure.FormInputs.Add(formProperty, input);
             if (isStackPanel)
             {
                 // Is never null because of InitializeFormStructure method
@@ -318,7 +368,7 @@ public class FormControl : ContentControl
         return null;
     }
 
-    private static FormInput CreateFormInputForObject(FormProperty property)
+    private static IFormInput CreateFormInputForObject(FormProperty property)
     {
         return null;
     }
