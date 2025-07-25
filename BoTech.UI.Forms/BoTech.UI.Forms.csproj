@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Version>1.0.2-alpha</Version>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>A ViewModel based FormBuilder for Avalonia</Description>
+        <PackageProjectUrl>https://github.com/BoTech-Development</PackageProjectUrl>
+        <PackageIcon>BoTech-Avatar.png</PackageIcon>
+        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageReleaseNotes>Submit and cancel Buttons are now fully supported. - Initial release of nuget package</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.3.2" />
+      <PackageReference Include="BoTech.UI" Version="1.0.7-alpha" />
+      <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="BoTech-Avatar.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+</Project>

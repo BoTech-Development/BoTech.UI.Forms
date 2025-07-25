@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoTech.UI.Forms.Base", "BoTech.UI.Forms.Base\BoTech.UI.Forms.Base.csproj", "{27A4E23A-7A4F-4BE1-8CE2-2F66E94CF120}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoTech.UI.Forms", "BoTech.UI.Forms\BoTech.UI.Forms.csproj", "{27A4E23A-7A4F-4BE1-8CE2-2F66E94CF120}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoTech.UI.Forms.Test", "BoTech.UI.Forms.Test\BoTech.UI.Forms.Test.csproj", "{7EEAF7E4-9AE0-4AB2-903E-07837F083F50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoTech.UI.Forms.Demo", "BoTech.UI.Forms.Demo\BoTech.UI.Forms.Demo.csproj", "{7EEAF7E4-9AE0-4AB2-903E-07837F083F50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
