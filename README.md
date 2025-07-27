@@ -11,9 +11,7 @@
 + The library takes care of validating and styling the view.
 
 ## Result
-<video width="460" height="320" controls>
-  <source src="https://raw.githubusercontent.com/BoTech-Development/BoTech.UI.Forms/master/ReadmeAssets/BoTech.UI.Forms.Demo.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/5a0da46b-1ecb-45e9-bb9e-1747f6eedbdd
 
 ### ViewModel
 ![Demo ViewModel](https://raw.githubusercontent.com/BoTech-Development/BoTech.UI.Forms/master/ReadmeAssets/DemoViewModel.png)
