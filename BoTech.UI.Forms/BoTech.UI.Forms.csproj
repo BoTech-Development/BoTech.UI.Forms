@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.0.2-alpha</Version>
+        <Version>1.0.3-alpha</Version>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Description>A ViewModel based FormBuilder for Avalonia</Description>
         <PackageProjectUrl>https://github.com/BoTech-Development</PackageProjectUrl>
@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageReleaseNotes>Submit and cancel Buttons are now fully supported. - Initial release of nuget package</PackageReleaseNotes>
+        <PackageReleaseNotes>Added support for isRequired property and added more info to the README.md file.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
