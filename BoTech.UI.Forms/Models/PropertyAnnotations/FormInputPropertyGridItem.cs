@@ -8,7 +8,7 @@ public class FormInputPropertyGridItem : FormInputProperty
 {
     public int ColumnIndex { get; set; }
     public int RowIndex { get; set; }
-    public FormInputPropertyGridItem(string name, string description, object? defaultValue, int rowIndex, int columnIndex) : base(name, description, defaultValue)
+    public FormInputPropertyGridItem(string name, string description, bool isRequired, object? defaultValue, int rowIndex, int columnIndex) : base(name, description, isRequired, defaultValue)
     {
         ColumnIndex = columnIndex;
         RowIndex = rowIndex;

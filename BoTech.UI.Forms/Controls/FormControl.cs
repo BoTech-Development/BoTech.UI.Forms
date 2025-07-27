@@ -16,10 +16,21 @@ namespace BoTech.UI.Forms.Controls;
 
 public delegate void OnFormAccepted(FormViewModelBase result);
 public delegate void OnFormCancelled(FormViewModelBase currentStatus);
+public delegate void OnFormRequiredInputsMissing(FormViewModelBase currentStatusOrResult, List<FormProperty> missingInputs, FormResultOption result);
 public class FormControl : ContentControl
 {
+    /// <summary>
+    /// Called when the user clicks the submit button
+    /// </summary>
     public event OnFormAccepted OnFormAccepted;
+    /// <summary>
+    /// Called when the user clicks the cancel Button
+    /// </summary>
     public event OnFormCancelled OnFormCancelled;
+    /// <summary>
+    /// Called when the user either click the submoit or cancel button and there are required inputs that are missing
+    /// </summary>
+    public event OnFormRequiredInputsMissing OnFormRequiredInputsMissing;
     public FormStructure ParentFormStructure { get; private set; }
     private FormControl(Control content,  FormStructure parentFormStructure)
     {
@@ -75,7 +86,14 @@ public class FormControl : ContentControl
 
     private void OnCancelButtonClick(object? sender, RoutedEventArgs e)
     {
-        OnFormCancelled.Invoke(CreateViewModelFromInput(ParentFormStructure, null));
+        List<FormProperty> missingInputs = new List<FormProperty>();
+        FormViewModelBase model = CreateViewModelFromInput(ParentFormStructure, null, missingInputs);
+        if (missingInputs.Count > 0)
+        {
+            OnFormRequiredInputsMissing.Invoke(model, missingInputs, FormResultOption.Cancelled);
+            return;
+        }
+        OnFormCancelled.Invoke(model);
     }
 
     private Button CreatSubmitButton()
@@ -105,7 +123,14 @@ public class FormControl : ContentControl
 
     private void OnSubmitButtonClick(object? sender, RoutedEventArgs e)
     {
-        OnFormAccepted.Invoke(CreateViewModelFromInput(ParentFormStructure, null));
+        List<FormProperty> missingInputs = new List<FormProperty>();
+        FormViewModelBase model = CreateViewModelFromInput(ParentFormStructure, null, missingInputs);
+        if (missingInputs.Count > 0)
+        {
+            OnFormRequiredInputsMissing.Invoke(model, missingInputs, FormResultOption.Accepted);
+            return;
+        }
+        OnFormAccepted.Invoke(model);
     }
     /// <summary>
     /// Creates all ViewModels for each FormStruture and injects all Results of the InputControls into the ViewModel.
@@ -113,14 +138,14 @@ public class FormControl : ContentControl
     /// <param name="formStructure"></param>
     /// <param name="parent"></param>
     /// <returns></returns>
-    private FormViewModelBase CreateViewModelFromInput(FormStructure formStructure, FormStructure? parent)
+    private FormViewModelBase CreateViewModelFromInput(FormStructure formStructure, FormStructure? parent, List<FormProperty> missingInputs)
     {   
-        FormViewModelBase result = CreateViewModelAndPopulate(formStructure);
+        FormViewModelBase result = CreateViewModelAndPopulate(formStructure, missingInputs);
         // When parent is null, this formStructure is already the parent
         if(parent != null) InjectViewModelInstanceIntoResultProperty(result, formStructure, parent);
         foreach (FormStructure subGroup in formStructure.SubGroups)
         {
-            CreateViewModelFromInput(subGroup, formStructure);
+            CreateViewModelFromInput(subGroup, formStructure, missingInputs);
         }
         return result;
     }
@@ -146,7 +171,7 @@ public class FormControl : ContentControl
     /// </summary>
     /// <param name="formStructure"></param>
     /// <returns>The created FormViewModel.</returns>
-    private FormViewModelBase CreateViewModelAndPopulate(FormStructure formStructure)
+    private FormViewModelBase CreateViewModelAndPopulate(FormStructure formStructure, List<FormProperty> missingInputs)
     {
         FormViewModelBase viewModel = (FormViewModelBase)Activator.CreateInstance(formStructure.ReferencedViewModelDeclaration.ViewModelType);
         foreach (FormProperty formProperty in  formStructure.ReferencedViewModelDeclaration.DeclaredFormProperties)
@@ -154,8 +179,15 @@ public class FormControl : ContentControl
             if (formStructure.FormInputs.ContainsKey(formProperty))
             {
                 FormInput inputControl = formStructure.FormInputs[formProperty];
-                object? value = Convert.ChangeType(inputControl.Result, formProperty.Property.PropertyType);
-                formProperty.Property.SetValue(viewModel, value);
+                if (inputControl.IsRequired && (inputControl.Result == null || inputControl.Result == formProperty.Annotation.DefaultValue))
+                {
+                    missingInputs.Add(formProperty);
+                }
+                else
+                {
+                    object? value = Convert.ChangeType(inputControl.Result, formProperty.Property.PropertyType);
+                    formProperty.Property.SetValue(viewModel, value);
+                }
             }
         }
         formStructure.Instance = viewModel;
@@ -214,18 +246,6 @@ public class FormControl : ContentControl
             // the sub class must have the FormInputGroupGridItem defined.
             if (subGroupClassStructure.GroupInformation is FormInputGroupGridItem gridItem)
             {
-              /*  if (subGroup.GridAlignedInputs != null)
-                {
-                    Grid.SetRow(subGroup.GridAlignedInputs, gridItem.RowIndex);
-                    Grid.SetColumn(subGroup.GridAlignedInputs, gridItem.ColumnIndex);
-                    parent.GridAlignedInputs.Children.Add(subGroup.GridAlignedInputs);
-                }
-                else if (subGroup.StackAlignedInputs != null)
-                {
-                    Grid.SetRow(subGroup.StackAlignedInputs, gridItem.RowIndex);
-                    Grid.SetColumn(subGroup.StackAlignedInputs, gridItem.ColumnIndex);
-                    parent.GridAlignedInputs.Children.Add(subGroup.StackAlignedInputs);
-                }*/
                 GroupBox box = subGroup.GroupBox;
                 Grid.SetRow(box, gridItem.RowIndex);
                 Grid.SetColumn(box, gridItem.ColumnIndex);
@@ -240,14 +260,6 @@ public class FormControl : ContentControl
         else if (parent.StackAlignedInputs != null)
         {
             parent.StackAlignedInputs.Children.Add(subGroup.GroupBox);
-            
-         /*   if (subGroup.StackAlignedInputs != null)
-            {
-                parent.StackAlignedInputs.Children.Add(subGroup.StackAlignedInputs);
-            }else if (subGroup.GridAlignedInputs != null)
-            {
-                parent.StackAlignedInputs.Children.Add(subGroup.GridAlignedInputs);
-            }*/
         }
         else
         {
@@ -333,7 +345,7 @@ public class FormControl : ContentControl
         if (propertyType == typeof(bool))
         {
             if(defaultValue is not bool) throw new ArgumentException("The type of " + nameof(defaultValue) + "is invalid you must invoke this method with an boolean or bool.");
-            return new BoolFormInput(property.Annotation.Name, property.Annotation.HelpText, (bool)defaultValue);
+            return new BoolFormInput(property.Annotation.Name, property.Annotation.HelpText, property.Annotation.IsRequired, (bool)defaultValue);
         }
         else if (propertyType == typeof(byte))
         { 
@@ -347,7 +359,7 @@ public class FormControl : ContentControl
         else if (propertyType == typeof(string))
         {
             if(defaultValue is not string) throw new ArgumentException("The type of " + nameof(defaultValue) + "is invalid you must invoke this method with an string.");
-            return new TextFormInput(property.Annotation.Name, property.Annotation.HelpText, (string)defaultValue);
+            return new TextFormInput(property.Annotation.Name, property.Annotation.HelpText,property.Annotation.IsRequired, (string)defaultValue);
         }
         else if (propertyType == typeof(int))
         {
@@ -383,7 +395,7 @@ public class FormControl : ContentControl
     {
         if (property.Annotation is NumericFormInputProperty numericFormInputProperty)
         {
-            return new NumberFormInput(property.Annotation.Name, property.Annotation.HelpText, numericFormInputProperty.Configuration);
+            return new NumberFormInput(property.Annotation.Name, property.Annotation.HelpText, property.Annotation.IsRequired, numericFormInputProperty.Configuration);
         }
         else // Just use the default params
         {
@@ -401,7 +413,7 @@ public class FormControl : ContentControl
                 throw new ArgumentException(
                     "Can not create an Numeric form input without an float, int or double input!!!");
             }
-            return new NumberFormInput(property.Annotation.Name, property.Annotation.HelpText, new NumberFormInput.NumericUpDownConfiguration()
+            return new NumberFormInput(property.Annotation.Name, property.Annotation.HelpText, property.Annotation.IsRequired, new NumberFormInput.NumericUpDownConfiguration()
             {
                 Value = (int)defaultValue,
             });

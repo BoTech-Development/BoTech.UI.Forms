@@ -15,7 +15,7 @@ public class NestedFormViewModelDeclaration
     /// Type of the current Class
     /// </summary>
     public Type ViewModelType { get; set; }
-
+    
     /// <summary>
     /// All properties that need an input elemnt.
     /// </summary>

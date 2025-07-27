@@ -13,21 +13,21 @@ public class DemoFormViewModel : FormViewModelBase
     [FormInputGroupStack("PersonalInformation", "Your Personal Information", Orientation.Vertical)]
     public class PersonalInformation : FormViewModelBase
     {
-        [FormInputProperty("FirstName", "Your First Name", "")]
+        [FormInputProperty("FirstName", "Your First Name", true,"")]
         public string FirstName { get; set; }
-        [FormInputProperty("LastName", "Your Last Name", "")]
+        [FormInputProperty("LastName", "Your Last Name",true, "")]
         public string LastName { get; set; }
     }
     [FormInputGroupGrid("AddressDetails", "Your Address Details", 2,2)]
     public class AddressDetails : FormViewModelBase
     {
-        [FormInputPropertyGridItem("Street", "The name of the street where you life", "", 0,0)]
+        [FormInputPropertyGridItem("Street", "The name of the street where you life",false ,"", 0,0)]
         public string Street { get; set; }
-        [FormInputPropertyGridItem("City", "The name of the City where you life", "", 1,0)]
+        [FormInputPropertyGridItem("City", "The name of the City where you life", false,"", 1,0)]
         public string City { get; set; }
-        [FormInputPropertyGridItem("State", "The name of the State where you life", "", 0,1)]
+        [FormInputPropertyGridItem("State", "The name of the State where you life", false,"", 0,1)]
         public string State { get; set; }
-        [FormInputPropertyGridItem("Zip", "The name of the Zip where you life", "", 1,1)]
+        [FormInputPropertyGridItem("Zip", "The name of the Zip where you life", false,"", 1,1)]
         public string Zip { get; set; }
     }
 }
