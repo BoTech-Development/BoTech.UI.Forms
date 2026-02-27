@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BoForm>
+    <Imports>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.PersonalInformation" As="personal"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.ContactDetails" As="contact"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.AddressDetails" As="address"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.StatisticDetails" As="statistic"/>
+        <!--<PackageImport namespace="BoTech.UI.Forms"/>-->
+    </Imports>
+    <Form Stepped="True">
+        <Step Title="Your personal Information" Subtitle="Information about your Identity.">
+            <Group Title="Register" Subtitle="Create a new Account on accounts.botech.dev">
+                <Group Title="Personal Information">
+                    <Stack Orientation="Horizontal">
+                        <Input Name="First Name"
+                               Property="personal.FirstName"/>
+                        <Input Name="Last Name"
+                               Property="personal.LastName"/>
+                    </Stack>
+                </Group>
+                <Group Title="Address Information">
+                    <Grid>
+                        <Row>
+                            <Column>
+                                <SearchTextInput Name="Country"
+                                                 Description="The country where you life in."
+                                                 StaticItemSource="../sources/boform/Countries.json"
+                                                 Property="address.Country"/>
+                            </Column>
+                            <Column>
+                                <SearchTextInput Name="City"
+                                                 Description="The city where you life in."
+                                                 Sortby="this.Country"
+                                                 ItemSource="address.Cities"
+                                                 Property="address.City"/>
+                            </Column>
+                        </Row>
+                        <Row>
+                            <Column>
+                                <Input Name="Street"
+                                       Property="address.Street"/>
+                            </Column>
+                            <Column>
+                                <Input Name="House Number"
+                                       Property="address.HouseNumber"/>
+                            </Column>
+                            <Column>
+                                <Input Name="Postal Code"
+                                       Property="address.PostalCode"/>
+                            </Column>
+                        </Row>
+                    </Grid>
+                </Group>
+            </Group>
+        </Step>
+        <Step Title="Just some statistics" Subtitle="We are interested in your opinion.">
+            <Group Title="Statistics" Subtitle="We are interested in your opinion.">
+                <Input Name="Profession"
+                       Property="statistic.Profession"/>
+                <StarInput Name="Just rate our services:"
+                       Property="statistic.ProductRating"/>
+                <Input Name="Years Of your Business Experience"
+                       Property="statistic.YearsOfExperience"/>
+            </Group>
+        </Step>
+    </Form>
+</BoForm>
