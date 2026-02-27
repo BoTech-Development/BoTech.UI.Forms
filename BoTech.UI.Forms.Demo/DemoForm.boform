@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BoForm>
     <Imports>
-        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.PersonalInformation" As="personal"/>
-        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.ContactDetails" As="contact"/>
-        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.AddressDetails" As="address"/>
-        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm.StatisticDetails" As="statistic"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm" ClassName="PersonalInformation" As="personal"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm" ClassName="ContactDetails" As="contact"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm" ClassName="AddressDetails" As="address"/>
+        <ViewModelImport Namespace="BoTech.UI.Forms.Demo.DemoForm" ClassName="StatisticDetails" As="statistic"/>
         <!--<PackageImport namespace="BoTech.UI.Forms"/>-->
     </Imports>
     <Form Stepped="True">

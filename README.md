@@ -1,4 +1,4 @@
-﻿![BoTech Logo](https://raw.githubusercontent.com/BoTech-Development/BoTech.UI/master/ReadmeAssets/BoTechLogoComplete.png)
+﻿![BoTech Logo](https://assets.botech.dev/Logos/BoTechLogoComplete.svg)
 
 # 📝 BoTech.UI.Forms
 ### 📢📢📢 Complete new implementation to align the project with multiple platforms and better integrate it into other projects
