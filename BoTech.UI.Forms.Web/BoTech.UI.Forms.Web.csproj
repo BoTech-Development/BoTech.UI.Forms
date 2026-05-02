@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BoTech.UI.Forms\BoTech.UI.Forms.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controls\Input\DateTime\" />
+      <Folder Include="Controls\Input\Numeric\" />
+      <Folder Include="Controls\Layout\Flyout\" />
+      <Folder Include="Controls\Layout\Grid\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.7" />
+      <PackageReference Include="MudBlazor" Version="9.4.0" />
+    </ItemGroup>
+
+</Project>

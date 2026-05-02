@@ -1,9 +1,7 @@
 ﻿namespace BoTech.UI.Forms.Controls.Input;
 
-public interface IInput<T> : IFormElement
+public interface IInput<T> : IFormElement, IDescribable, INameable
 {
-    public string Description { get; init; }
-    public string Name { get; init; } 
     /// <summary>
     /// The Property in the Viewmodel this Input is bound to.
     /// </summary>
@@ -13,8 +11,9 @@ public interface IInput<T> : IFormElement
     /// </summary>
     T Value { get; }
     /// <summary>
-    /// Will be called by the backend when the user edits the Element
+    /// Will be called by the backend when the user finished editing this Element.
+    /// Classes that implement this interface must invoke this event.
     /// </summary>
-    public void OnUserUpdatedValue();
+    public event EventHandler OnUserUpdatedValue;
 
 }

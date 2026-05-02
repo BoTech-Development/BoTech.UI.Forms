@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Controls\Layout\Flyout\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BoTech.XmlParser" Version="1.1.0" />
+    </ItemGroup>
+
 </Project>

@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="BoTech.UI.Forms.Web.Demo/BoTech.UI.Forms.Web.Demo.csproj" />
+  <Project Path="BoTech.UI.Forms.Web/BoTech.UI.Forms.Web.csproj" />
   <Project Path="BoTech.UI.Forms/BoTech.UI.Forms.csproj" />
 </Solution>

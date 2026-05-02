@@ -1,0 +1,35 @@
+﻿@page "/"
+@using BoTech.UI.Forms.Web.Controls.Input.Text
+@using BoTech.UI.Forms.Web.Rendering
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<MudRender></MudRender>
+
+<MudButton Variant="Variant.Filled" @onclick="RenderAll">Render Now</MudButton>
+
+<div>Testing BoTech.UI.Forms:</div>
+<div>
+    @BoTechUIFormsTestFragment
+</div>
+
+
+@code{
+    
+    public RenderFragment BoTechUIFormsTestFragment { get; set; } = builder =>
+    {
+        builder.AddContent(0, "Please click Render Now");
+       
+    };
+    
+    private void RenderAll(MouseEventArgs obj)
+    {
+        TextInput textInput = new TextInput();
+        VisualSurface surface = new VisualSurface();
+        surface.UpdateRootElement(textInput);
+        surface.Render();
+        BoTechUIFormsTestFragment = surface.Content;
+    }
+
+}
