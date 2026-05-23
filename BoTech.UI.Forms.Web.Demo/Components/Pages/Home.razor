@@ -5,9 +5,16 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudRender></MudRender>
 
 <MudButton Variant="Variant.Filled" @onclick="RenderAll">Render Now</MudButton>
+
+
+<MudStack Row="true">
+    <MudTextField T="string" HelperText="Some text"></MudTextField>
+    <MudToggleIconButton Icon="@Icons.Material.Filled.Info" ToggledIcon="@Icons.Material.Filled.Close"></MudToggleIconButton>
+</MudStack>
+
+
 
 <div>Testing BoTech.UI.Forms:</div>
 <div>
@@ -16,7 +23,7 @@
 
 
 @code{
-    
+    public bool _expanded = false;
     public RenderFragment BoTechUIFormsTestFragment { get; set; } = builder =>
     {
         builder.AddContent(0, "Please click Render Now");

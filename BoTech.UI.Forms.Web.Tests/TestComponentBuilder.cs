@@ -1,38 +1,21 @@
-﻿using BoTech.UI.Forms.Controls;
-using BoTech.UI.Forms.Controls.Input.Text;
-using BoTech.UI.Forms.Controls.Layout;
-using BoTech.UI.Forms.Rendering;
+﻿using BoTech.UI.Forms.Rendering;
+using BoTech.UI.Forms.Web.Rendering;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace BoTech.UI.Forms.Web.Controls.Input.Text;
+namespace BoTech.UI.Forms.Web.Tests;
 
-public class TextInput : ITextInput
+public class TestComponentBuilder
 {
-    public bool IsVisible { get; set; }
-    public bool IsEnabled { get; set; }
-    public string Name { get; init; }
-    public Guid Id { get; init; }
-    public string Description { get; init; }
-    public string Property { get; init; }
-    public bool IsMultiline { get; init; }
-    public string Value { get; }
-    public event EventHandler? OnUserUpdatedValue;
-    
-    public ComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
+    [SetUp]
+    public void SetUp()
     {
-        /*return new ComponentBuilderConfiguration()
-        {
-            ComponentType = typeof(MudTextField<string>),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-            {
-                new ComponentBuilderAttributeConfiguration()
-                {
-                    AttributeName = "HelperText",
-                    AttributeValue = "Some Name"
-                }
-            }
-        };*/
-        return new ComponentBuilderConfiguration()
+        
+    }
+    [Test]
+    public void TestTextBoxBuilding()
+    {
+        RenderFragment fragment = new ComponentBuilder().BuildComponentFromConfig(new ComponentBuilderConfiguration()
         {
             ComponentType = typeof(MudStack),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
@@ -75,21 +58,8 @@ public class TextInput : ITextInput
                     }
                 }
             }
-        };
+        });
     }
-    
-    public void TryToAddChild(IFormElement child)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OpenDescription()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void CloseDescription()
-    {
-        throw new NotImplementedException();
-    }
+    [TearDown]
+    public void TearDown(){}
 }

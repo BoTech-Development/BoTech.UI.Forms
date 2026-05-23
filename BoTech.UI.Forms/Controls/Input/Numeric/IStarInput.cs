@@ -2,5 +2,9 @@
 
 public interface IStarInput : INumberInput<int>
 {
-    public int NumberOfStars { get; init; }
+    /// <summary>
+    /// Defines how many stars should be displayed.
+    /// The Maximum is 255.
+    /// </summary>
+    public byte NumberOfStars { get; init; }
 }
