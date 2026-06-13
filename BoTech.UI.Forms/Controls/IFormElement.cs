@@ -5,7 +5,13 @@ namespace BoTech.UI.Forms.Controls;
 
 public interface IFormElement : IVisualControl
 {
+    /// <summary>
+    /// If true the Element will be rendered
+    /// </summary>
     public bool IsVisible { get; set; }
+    /// <summary>
+    /// When true the user can interact with the Element.
+    /// </summary>
     public bool IsEnabled { get; set; }
     /// <summary>
     /// Returns a boolean indicating whether the object which implements <see cref="ILayoutElement"/> or <see cref="IContentElement"/> so that it can have children.

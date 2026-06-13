@@ -5,10 +5,10 @@ namespace BoTech.UI.Forms.Services;
 
 public class VisualSurfaceManager
 {
-    public IVisualSurface? CurrentVisualSurface { get; set; }
+/*    public IVisualSurface? CurrentVisualSurface { get; set; }
     public static VisualSurfaceManager Instance { get; } = new();
     private VisualSurfaceManager()
     {
         
-    }
+    }*/
 }

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Title>BoTech.UI.Forms.Avalonia</Title>
+        <Version>1.0.4-alpha</Version>
+        <Copyright>All Rights Reserved!</Copyright>
+        <PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
+        <PackageIcon>BoTechLogoSmall.png</PackageIcon>
+        <Authors>www.botech.dev</Authors>
+        <AssemblyVersion>1.0.4.0</AssemblyVersion>
+        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BoTech.UI.Forms\BoTech.UI.Forms.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="12.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="BoTectLogoSmall.drawio.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+</Project>

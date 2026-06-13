@@ -2,5 +2,5 @@
 
 public interface IVisualControl
 {
-    public ComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis();
+    public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis();
 }

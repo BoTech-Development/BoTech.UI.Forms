@@ -6,6 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <Version>1.0.4-alpha</Version>
+        <Copyright>All Rights Reserved!</Copyright>
+        <PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
+        <PackageIcon>BoTechLogoSmall.png</PackageIcon>
+        <Authors>www.botech.dev</Authors>
+        <AssemblyVersion>1.0.4.0</AssemblyVersion>
+        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

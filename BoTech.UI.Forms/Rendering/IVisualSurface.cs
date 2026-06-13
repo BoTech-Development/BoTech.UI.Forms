@@ -2,8 +2,13 @@
 
 namespace BoTech.UI.Forms.Rendering;
 
-public interface IVisualSurface
+public interface IVisualSurface<TControlTypeBase>
 {
+    /// <summary>
+    /// Getter for the rendered root element, build by the <see cref="Render"/> method.
+    /// </summary>
+    /// <returns>the rendered item or null if <see cref="Render"/> method was not called or if <see cref="DeleteRootElement"/> was called.</returns>
+    public TControlTypeBase? GetPrerenderedRootElement();
     /// <summary>
     /// Render the visual surface in the UI window / webpage
     /// </summary>

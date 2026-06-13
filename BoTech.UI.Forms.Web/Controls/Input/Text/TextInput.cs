@@ -2,6 +2,7 @@
 using BoTech.UI.Forms.Controls.Input.Text;
 using BoTech.UI.Forms.Controls.Layout;
 using BoTech.UI.Forms.Rendering;
+using BoTech.UI.Forms.Web.Rendering;
 using MudBlazor;
 
 namespace BoTech.UI.Forms.Web.Controls.Input.Text;
@@ -18,69 +19,64 @@ public class TextInput : ITextInput
     public string Value { get; }
     public event EventHandler? OnUserUpdatedValue;
     
-    public ComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
+    public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        /*return new ComponentBuilderConfiguration()
-        {
-            ComponentType = typeof(MudTextField<string>),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-            {
-                new ComponentBuilderAttributeConfiguration()
-                {
-                    AttributeName = "HelperText",
-                    AttributeValue = "Some Name"
-                }
-            }
-        };*/
         return new ComponentBuilderConfiguration()
         {
             ComponentType = typeof(MudStack),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
             {
-                new ComponentBuilderAttributeConfiguration()
-                {
-                    AttributeName = "Row",
-                    AttributeValue = true
-                }
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Row", true)
             },
-            Children = new List<ComponentBuilderConfiguration>()
+            Children = new List<IComponentBuilderConfiguration>()
             {
                 new ComponentBuilderConfiguration()
                 {
                     ComponentType = typeof(MudTextField<string>),
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                     {
-                        new ComponentBuilderAttributeConfiguration()
-                        {
-                            AttributeName = "HelperText",
-                            AttributeValue = "Some Name"
-                        }
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("HelperText", "Some Name")
                     }
                 },
-                new ComponentBuilderConfiguration()
+                new HelpDescriptionOfFormElement()
                 {
-                    ComponentType = typeof(MudToggleIconButton),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        new ComponentBuilderAttributeConfiguration()
-                        {
-                            AttributeName = "Icon",
-                            AttributeValue = Icons.Material.Filled.Info
-                        },
-                        new ComponentBuilderAttributeConfiguration()
-                        {
-                            AttributeName = "ToggledIcon",
-                            AttributeValue = Icons.Material.Filled.Close
-                        }
-                    }
-                }
+                    HelpText = Description,
+                }.BuildComponentBuilderConfigurationFromThis()
             }
         };
+        /* return new ComponentBuilderConfiguration()
+         {
+             ComponentType = typeof(MudStack),
+             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+             {
+                 new ComponentBuilderAttributeConfiguration("Row",true)
+             },
+             Children = new List<ComponentBuilderConfiguration>()
+             {
+                 new ComponentBuilderConfiguration()
+                 {
+                     ComponentType = typeof(MudTextField<string>),
+                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                     {
+                         new ComponentBuilderAttributeConfiguration("HelperText","Some Name")
+                     }
+                 },
+                 new ComponentBuilderConfiguration()
+                 {
+                     ComponentType = typeof(MudToggleIconButton),
+                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                     {
+                         new ComponentBuilderAttributeConfiguration("Icon", Icons.Material.Filled.Info),
+                         new ComponentBuilderAttributeConfiguration( "ToggledIcon", Icons.Material.Filled.Close)
+                     }
+                 }
+             }
+         };*/
     }
     
     public void TryToAddChild(IFormElement child)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Cannot add child to a TextInput control.");
     }
 
     public void OpenDescription()

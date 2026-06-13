@@ -29,7 +29,7 @@ public abstract class AInput : IInput<object>
         throw new NotSupportedException("You can not add a children to a AInput");
     }
     public void EvaluateType(){}
-    public ComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
+    public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
         throw new NotImplementedException();
     }

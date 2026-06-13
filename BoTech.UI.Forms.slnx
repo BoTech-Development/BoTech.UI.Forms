@@ -1,4 +1,14 @@
 <Solution>
+  <Project Path="BoTech.UI.Forms.Avalonia.Demo.Android/BoTech.UI.Forms.Avalonia.Demo.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BoTech.UI.Forms.Avalonia.Demo.Browser/BoTech.UI.Forms.Avalonia.Demo.Browser.csproj" />
+  <Project Path="BoTech.UI.Forms.Avalonia.Demo.Desktop/BoTech.UI.Forms.Avalonia.Demo.Desktop.csproj" />
+  <Project Path="BoTech.UI.Forms.Avalonia.Demo.iOS/BoTech.UI.Forms.Avalonia.Demo.iOS.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BoTech.UI.Forms.Avalonia.Demo/BoTech.UI.Forms.Avalonia.Demo.csproj" />
+  <Project Path="BoTech.UI.Forms.Avalonia/BoTech.UI.Forms.Avalonia.csproj" />
   <Project Path="BoTech.UI.Forms.Web.Demo/BoTech.UI.Forms.Web.Demo.csproj" />
   <Project Path="BoTech.UI.Forms.Web.Tests/BoTech.UI.Forms.Web.Tests.csproj" />
   <Project Path="BoTech.UI.Forms.Web/BoTech.UI.Forms.Web.csproj" />

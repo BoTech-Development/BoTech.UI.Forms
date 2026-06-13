@@ -5,6 +5,13 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+        <Version>1.0.4-alpha</Version>
+        <Copyright>All Rights Reserved!</Copyright>
+        <PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
+        <PackageIcon>BoTechLogoSmall.png</PackageIcon>
+        <Authors>www.botech.dev</Authors>
+        <AssemblyVersion>1.0.4.0</AssemblyVersion>
+        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
     </PropertyGroup>
 
 
@@ -15,5 +22,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BoTech.UI.Forms.Web\BoTech.UI.Forms.Web.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <None Include="Components\DynamicComponentHost.razor" />
     </ItemGroup>
 </Project>

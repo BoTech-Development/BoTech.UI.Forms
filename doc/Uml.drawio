@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36">
   <diagram name="Page-1" id="L7wqD04KVW0BJ3iuK8pm">
-    <mxGraphModel dx="1419" dy="1040" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="512" pageHeight="512" math="0" shadow="0">
+    <mxGraphModel dx="2144" dy="1462" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="512" pageHeight="512" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -607,6 +607,21 @@
         </mxCell>
         <mxCell id="WulEiowZAwi4jLePl-fP-19" parent="WulEiowZAwi4jLePl-fP-13" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ CloseDescription()&amp;nbsp;" vertex="1">
           <mxGeometry height="30" width="200" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj84DsCdhLFfHq5FZI6w-1" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=42;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;IDescriptionOfFormElement" vertex="1">
+          <mxGeometry height="136" width="200" x="-410" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj84DsCdhLFfHq5FZI6w-5" parent="Lj84DsCdhLFfHq5FZI6w-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="(+,i) HelpLink : string" vertex="1">
+          <mxGeometry height="30" width="200" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj84DsCdhLFfHq5FZI6w-4" parent="Lj84DsCdhLFfHq5FZI6w-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="(+,i) HelpText : string" vertex="1">
+          <mxGeometry height="30" width="200" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj84DsCdhLFfHq5FZI6w-2" parent="Lj84DsCdhLFfHq5FZI6w-1" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" value="" vertex="1">
+          <mxGeometry height="8" width="200" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj84DsCdhLFfHq5FZI6w-3" parent="Lj84DsCdhLFfHq5FZI6w-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ EvaluateT&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ype()&lt;/span&gt;" vertex="1">
+          <mxGeometry height="26" width="200" y="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

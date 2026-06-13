@@ -1,0 +1,9 @@
+@using Microsoft.AspNetCore.Components
+<MudText> @Config.ComponentType.ToString();</MudText>
+<DynamicComponent Type="@Config.ComponentType" Parameters="@Config.Parameters">
+    @foreach(RenderTreeConfig config in Config.Children)
+    {
+        Console.WriteLine(config);
+        <DynamicComponentHost Config="@config"/>
+    }
+</DynamicComponent>

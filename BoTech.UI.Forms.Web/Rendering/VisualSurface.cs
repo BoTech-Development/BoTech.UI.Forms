@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace BoTech.UI.Forms.Web.Rendering;
 
-public class VisualSurface : IVisualSurface
+public class VisualSurface : IVisualSurface<RenderFragment>
 {
-    public RenderFragment? Content => _prerenderedContent;
+
     private RenderFragment? _prerenderedContent;
     
     private IComponentBuilder<RenderFragment> _builder;
@@ -18,10 +18,15 @@ public class VisualSurface : IVisualSurface
         _builder = new ComponentBuilder();
     }
 
+    public RenderFragment? GetPrerenderedRootElement()
+    {
+        return _prerenderedContent;
+    }
+
     public void Render()
     {
         if (_content == null) throw new InvalidOperationException("Add content before rendering.");
-        _prerenderedContent = _builder.BuildComponentFromConfig(_content.BuildComponentBuilderConfigurationFromThis());
+        _prerenderedContent = _builder.BuildComponent( _content);
     }
 
     private void RenderRecursive(IFormElement element)

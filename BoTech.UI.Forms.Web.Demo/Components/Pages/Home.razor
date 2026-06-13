@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Runtime.CompilerServices
 @using BoTech.UI.Forms.Web.Controls.Input.Text
 @using BoTech.UI.Forms.Web.Rendering
 @rendermode InteractiveServer
@@ -8,27 +9,48 @@
 
 <MudButton Variant="Variant.Filled" @onclick="RenderAll">Render Now</MudButton>
 
-
+<MudPopoverProvider />
 <MudStack Row="true">
     <MudTextField T="string" HelperText="Some text"></MudTextField>
-    <MudToggleIconButton Icon="@Icons.Material.Filled.Info" ToggledIcon="@Icons.Material.Filled.Close"></MudToggleIconButton>
+    
+    <MudToggleIconButton Icon="@Icons.Material.Filled.Info" 
+                         ToggledIcon="@Icons.Material.Filled.Close"
+                         @bind-Toggled="@_expanded">
+    </MudToggleIconButton>
+    <MudPopover @bind-Open="_expanded">
+        <MudStack Row="true">
+            <MudAlert Severity="Severity.Info">
+                <MudText>Hellord from help</MudText>
+            </MudAlert>
+            <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="() => { _expanded = false; Console.WriteLine('C');}"/>
+        </MudStack>
+    </MudPopover>
 </MudStack>
 
-
+<button onclick="() => {console.log('Hellord')}">btn</button>
 
 <div>Testing BoTech.UI.Forms:</div>
 <div>
     @BoTechUIFormsTestFragment
 </div>
 
+<MudButton @onclick="OnTestClick">Test  Microsoft.AspNetCore.Components.DynamicComponent</MudButton>
+<DynamicComponent Type="typeof(MudButton)" Parameters="@Parameters" /> 
+
+<DynamicComponentHost Config="@DynamicComponentConfig"/>
+
 
 @code{
     public bool _expanded = false;
     public RenderFragment BoTechUIFormsTestFragment { get; set; } = builder =>
     {
-        builder.AddContent(0, "Please click Render Now");
+        builder.AddContent(0, "Please click Render Now to render the form");
        
     };
+    
+    public DynamicComponentHost.RenderTreeConfig DynamicComponentConfig { get; set; } = new DynamicComponentHost.RenderTreeConfig();
+
+    public IDictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
     
     private void RenderAll(MouseEventArgs obj)
     {
@@ -36,7 +58,55 @@
         VisualSurface surface = new VisualSurface();
         surface.UpdateRootElement(textInput);
         surface.Render();
-        BoTechUIFormsTestFragment = surface.Content;
+        BoTechUIFormsTestFragment = surface.GetPrerenderedRootElement();
+        
+        
+        //TestDynamicComponent = new Dynamc
+    }
+
+    protected override void OnParametersSet()
+    {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param.Add("Variant", Variant.Filled);
+       // param.Add("ChildContent", new RenderFragment((builder2) => { builder2.AddContent(0, "Please press the button above"); }));
+        Dictionary<string, object> param1 = new Dictionary<string, object>();
+        param1.Add("Variant", Variant.Filled);
+        param1.Add("Value", "Bello!!!");
+        Dictionary<string, object> param2 = new Dictionary<string, object>();
+        param2.Add("Row", true);
+        DynamicComponentConfig = new DynamicComponentHost.RenderTreeConfig()
+        {
+            Parameters = param2,
+            ComponentType = typeof(MudStack),
+            Children = new List<DynamicComponentHost.RenderTreeConfig>()
+            {
+                new DynamicComponentHost.RenderTreeConfig()
+                {
+                    Parameters = param1,
+                    ComponentType = typeof(MudTextField<string>),
+                },
+                new DynamicComponentHost.RenderTreeConfig()
+                {
+                    Parameters = param,
+                    ComponentType = typeof(MudButton),
+                }
+            }
+        };
+        Parameters.Add("Variant", Variant.Filled);
+       /* Parameters.Add("ChildContent", new RenderFragment((builder) =>
+        {
+            builder.AddContent(0, "Please press the button above");
+        }));*/
+        base.OnParametersSet();
+    }
+
+    private void OnTestClick()
+    {
+        Parameters["Variant"] = Variant.Outlined;
+        Parameters["ChildContent"] = new RenderFragment((builder) =>
+        {
+            builder.AddContent(0, "Thanks for pressing.");
+        });
     }
 
 }
