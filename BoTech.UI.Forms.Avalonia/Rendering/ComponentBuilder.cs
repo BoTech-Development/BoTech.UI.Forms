@@ -7,16 +7,17 @@ using Avalonia.Data;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Layout;
 using BoTech.UI.Forms.Rendering;
+using BoTech.UI.Forms.Services;
 
 namespace BoTech.UI.Forms.Avalonia.Rendering;
 
-public class ComponentBuilder : IComponentBuilder<Control>
+public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
 {
 
-    public Control BuildComponent(IFormElement instanceOfRootFormElement)
+    public AvaloniaObject BuildComponent(IFormElement instanceOfRootFormElement)
     {
        // _currentFormElement = instanceOfRootFormElement;
-        return (Control)BuildSpecificComponentFromConfigAndChildren(instanceOfRootFormElement, instanceOfRootFormElement.BuildComponentBuilderConfigurationFromThis());
+        return BuildSpecificComponentFromConfigAndChildren(instanceOfRootFormElement, instanceOfRootFormElement.BuildComponentBuilderConfigurationFromThis());
     }
 
     private AvaloniaObject BuildSpecificComponentFromConfigAndChildren(IFormElement instanceOfRootFormElement, IComponentBuilderConfiguration config)
@@ -28,6 +29,10 @@ public class ComponentBuilder : IComponentBuilder<Control>
     private AvaloniaObject BuildSpecificComponentFromConfig(IFormElement instanceOfRootFormElement, IComponentBuilderConfiguration config)
     {
         AvaloniaObject avaloniaObject = (AvaloniaObject)config.ComponentType.GetConstructor(new Type[0]).Invoke(new object?[0]);
+        
+        //TODO: Remove side effect:
+        VisualSurfaceManager<AvaloniaObject>.Instance.CurrentVisualSurface.GetRenderedComponentFinder().AddRenderedComponent(config.Id, instanceOfRootFormElement, avaloniaObject);
+        
         if(avaloniaObject is Control control) 
             control.DataContext = instanceOfRootFormElement;
         AddComponentAttributesToControl(avaloniaObject, config, instanceOfRootFormElement);
@@ -85,6 +90,8 @@ public class ComponentBuilder : IComponentBuilder<Control>
             {
                 AvaloniaObject controlAsValue = BuildSpecificComponentFromConfig(instanceOfRootFormElement, attributeConfig.ControlValueConfig);
                 AddPrimitiveAttributeToControl(control, config.ComponentType, attributeConfig.AttributeName, controlAsValue);
+              /*  if (attributeConfig.ShouldStoreAnotherControlAsValueResult)
+                    StoreNewControlInFormElement(attributeConfig.NameOfPropertyToStoreTheResultValue, config.ConfigurationForFormElement, controlAsValue);*/
             }
             else
             {
@@ -93,6 +100,18 @@ public class ComponentBuilder : IComponentBuilder<Control>
         }
     }
 
+ /*   private void StoreNewControlInFormElement(string propertyToStoreThNewInstanceIn, IFormElement formElement,
+        AvaloniaObject controlToStore)
+    {
+        PropertyInfo? propertyToSet = formElement.GetType().GetProperty(propertyToStoreThNewInstanceIn);
+        FieldInfo? fieldInfo = formElement.GetType().GetField(propertyToStoreThNewInstanceIn);
+        if (propertyToSet == null && fieldInfo == null)
+            throw new ArgumentException($"Property {propertyToStoreThNewInstanceIn} does not exist in the form element {formElement}, where the control {controlToStore} should be stored.");
+        if(propertyToSet != null)
+            propertyToSet.SetValue(formElement, controlToStore);
+        if(fieldInfo != null)
+            fieldInfo.SetValue(formElement, controlToStore);
+    }*/
     private void AddBindingAttributeToControl(AvaloniaObject controlInstance, Type typeOfControl, ComponentBuilderAttributeConfiguration config)
     {
         FieldInfo? avaloniaPropertyDescriptorPropertyInfo = typeOfControl.GetField(config.AttributeName);

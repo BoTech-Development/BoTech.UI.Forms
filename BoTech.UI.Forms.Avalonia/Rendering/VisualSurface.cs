@@ -1,15 +1,28 @@
 ﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Rendering;
+using BoTech.UI.Forms.Services;
 
 namespace BoTech.UI.Forms.Avalonia.Rendering;
 
-public class VisualSurface : IVisualSurface<Control>
+public class VisualSurface : IVisualSurface<AvaloniaObject>
 {
-    private Control? _renderedRootElement = null;
+    private AvaloniaObject? _renderedRootElement = null;
     private IFormElement? _rootElement = null;
-    public Control? GetPrerenderedRootElement()
+    private readonly RenderedComponentFinder _finder = new RenderedComponentFinder();
+
+    public VisualSurface()
+    {
+        VisualSurfaceManager<AvaloniaObject>.CreateInstance(this);
+    }
+    public IRenderedComponentFinder<AvaloniaObject> GetRenderedComponentFinder()
+    {
+        return _finder;
+    }
+
+    public AvaloniaObject? GetPrerenderedRootElement()
     {
         return _renderedRootElement;
     }

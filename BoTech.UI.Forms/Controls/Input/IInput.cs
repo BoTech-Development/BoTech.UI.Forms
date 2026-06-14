@@ -15,5 +15,4 @@ public interface IInput<T> : IFormElement, IDescribable, INameable
     /// Classes that implement this interface must invoke this event.
     /// </summary>
     public event EventHandler OnUserUpdatedValue;
-
 }

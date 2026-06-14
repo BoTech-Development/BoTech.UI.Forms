@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using Avalonia.Media;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input.Text;
@@ -18,14 +20,22 @@ public class TextInput : ITextInput
     /// <inheritdoc/>
     /// </summary>
     public string Description { get; init; }
+    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
     public Guid Id { get; init; }
     public string Property { get; init; }
     public string Value { get; }
     public event EventHandler? OnUserUpdatedValue;
     public bool IsMultiline { get; init; }
+
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        return new ComponentBuilderConfiguration()
+        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
+        {
+            IsEnabled = this.IsEnabled,
+            IsVisible = this.IsVisible,
+            HelpText = this.Description,
+        };
+        return new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(StackPanel),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
@@ -34,7 +44,18 @@ public class TextInput : ITextInput
             },
             Children = new List<IComponentBuilderConfiguration>()
             {
-                new ComponentBuilderConfiguration()
+                new ComponentBuilderConfiguration(this)
+                {
+                    ComponentType = typeof(TextBlock),
+                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    {
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Text", Name + ":"),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontSize", 18),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontWeight", FontWeight.SemiBold),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
+                    }
+                },
+                new ComponentBuilderConfiguration(this)
                 {
                     ComponentType = typeof(TextBox),
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
@@ -45,29 +66,24 @@ public class TextInput : ITextInput
                         ComponentBuilderAttributeConfiguration.CreateConstantAttribute("IsReadOnly", IsEnabled),
                     }
                 },
-                new HelpDescriptionOfFormElement()
-                {
-                    IsEnabled = this.IsEnabled,
-                    IsVisible = this.IsVisible,
-                    HelpText = this.Description,
-                }.BuildComponentBuilderConfigurationFromThis()
+                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
             }
         };
     }
 
     public void TryToAddChild(IFormElement child)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
     
     public void OpenDescription()
     {
-        throw new NotImplementedException();
+        HelpDescriptionOfFormElement.OpenDescription();
     }
 
     public void CloseDescription()
     {
-        throw new NotImplementedException();
+        HelpDescriptionOfFormElement.CloseDescription();
     }
 
 

@@ -4,6 +4,7 @@ namespace BoTech.UI.Forms.Controls.Input;
 
 public abstract class AInput : IInput<object>
 {
+    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; }
     public string Description { get; init; }
     public void OpenDescription()
     {

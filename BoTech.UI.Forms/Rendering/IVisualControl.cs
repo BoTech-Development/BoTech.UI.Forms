@@ -1,6 +1,8 @@
-﻿namespace BoTech.UI.Forms.Rendering;
+﻿using BoTech.UI.Forms.Controls;
 
-public interface IVisualControl
+namespace BoTech.UI.Forms.Rendering;
+
+public interface IVisualControl : IUniqueElement
 {
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis();
 }

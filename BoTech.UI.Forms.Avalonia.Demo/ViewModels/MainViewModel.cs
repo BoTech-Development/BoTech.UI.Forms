@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reactive;
 using Avalonia.Controls;
 using Avalonia.Data;
 using BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 using BoTech.UI.Forms.Avalonia.Rendering;
+using ReactiveUI;
 
 namespace BoTech.UI.Forms.Avalonia.Demo.ViewModels;
 
@@ -11,7 +13,7 @@ public class MainViewModel : ViewModelBase
     public string Greeting { get; } = "Welcome to Avalonia!";
     public Control Content { get; set; }
     public Control Form { get; set; }
-
+    public ReactiveCommand<Unit, Unit> OnOpenDescription { get; set; }
     public MainViewModel()
     {
         
@@ -24,13 +26,21 @@ public class MainViewModel : ViewModelBase
         Content = box;
         
         VisualSurface surface = new VisualSurface();
-        surface.UpdateRootElement(new TextInput()
+        TextInput textInput = new TextInput()
         {
-            Description = "My description",
-            IsMultiline =  true,
+            Name = "FirstName",
+            Description = "We need your first name for identification purpose",
+            IsMultiline = true,
 
+        };
+
+        OnOpenDescription = ReactiveCommand.Create(() =>
+        {
+            textInput.OpenDescription();
         });
+        
+        surface.UpdateRootElement(textInput);
         surface.Render();
-        Form = surface.GetPrerenderedRootElement();
+        Form = (Control)surface.GetPrerenderedRootElement();
     }
 }

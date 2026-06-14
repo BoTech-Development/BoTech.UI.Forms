@@ -2,8 +2,12 @@
 
 namespace BoTech.UI.Forms.Rendering;
 
-public interface IVisualSurface<TControlTypeBase>
+public interface IVisualSurface<TControlTypeBase> where TControlTypeBase : class
 {
+    /// <summary>
+    /// This method must return the unique instance of the component finder which can find components by their id.
+    /// </summary>
+    public IRenderedComponentFinder<TControlTypeBase> GetRenderedComponentFinder();
     /// <summary>
     /// Getter for the rendered root element, build by the <see cref="Render"/> method.
     /// </summary>

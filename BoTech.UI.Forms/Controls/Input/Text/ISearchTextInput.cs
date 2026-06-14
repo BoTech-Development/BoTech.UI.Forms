@@ -3,6 +3,6 @@
 public interface ISearchTextInput : ITextInput
 {
     public string StaticItemSource { get; set; }
-    public string ItemSource { get; set; }
-    public string SortBy { get; set; }
+    public IEnumerable<string> ItemSource { get; set; }
+    public string SortByRegex { get; set; }
 }

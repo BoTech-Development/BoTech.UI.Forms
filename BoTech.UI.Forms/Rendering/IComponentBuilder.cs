@@ -9,6 +9,8 @@ public interface IComponentBuilder<TControlTypeBase> where TControlTypeBase : cl
 {
     /// <summary>
     /// This method build the component to a specific base type which can be displayed.
+    /// This method also adds the result (visualTree) to the implementation of <see cref="IRenderedComponentFinder{TControlTypeBase}"/>
+    /// TODO: Remove side effect. => No clean code.
     /// </summary>
     /// <param name="instanceOfRootFormElement">The component build</param>
     /// <returns>a displayable implementation of the component and all child components</returns>

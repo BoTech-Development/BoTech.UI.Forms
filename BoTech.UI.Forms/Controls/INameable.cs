@@ -3,5 +3,5 @@
 public interface INameable
 {
     public string Name { get; init; }
-    public Guid Id { get; init; }
+
 }

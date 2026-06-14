@@ -3,12 +3,18 @@ using BoTech.UI.Forms.Rendering;
 
 namespace BoTech.UI.Forms.Services;
 
-public class VisualSurfaceManager
+public class VisualSurfaceManager<TControlTypeBase>  where TControlTypeBase : class
 {
-/*    public IVisualSurface? CurrentVisualSurface { get; set; }
-    public static VisualSurfaceManager Instance { get; } = new();
-    private VisualSurfaceManager()
+    public IVisualSurface<TControlTypeBase>? CurrentVisualSurface { get; init; }
+    public static VisualSurfaceManager<TControlTypeBase>? Instance { get; private set; }
+
+    public static void CreateInstance(IVisualSurface<TControlTypeBase> currentVisualSurface)
     {
-        
-    }*/
+        Instance = new VisualSurfaceManager<TControlTypeBase>(currentVisualSurface);
+    }
+    
+    private VisualSurfaceManager(IVisualSurface<TControlTypeBase> currentVisualSurface)
+    {
+        CurrentVisualSurface = currentVisualSurface;
+    }
 }

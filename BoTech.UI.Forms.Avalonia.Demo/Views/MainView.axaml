@@ -12,8 +12,13 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <StackPanel>
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Binding Test:"/>
         <ContentControl Content="{Binding Content}" />
+        <TextBlock Text="BoTech.UI.Forms test:"/>
+        <Button Command="{Binding OnOpenDescription}">
+            Open all Description Blocks
+        </Button>
+        <TextBlock Text="Render result:"/>
         <ContentControl Content="{Binding Form}" />
     </StackPanel>
  

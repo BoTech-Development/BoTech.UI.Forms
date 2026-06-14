@@ -1,11 +1,39 @@
-﻿namespace BoTech.UI.Forms.Rendering;
+﻿using System.Reflection;
+using System.Text.Json.Serialization;
+
+namespace BoTech.UI.Forms.Rendering;
 
 public class ComponentBuilderAttributeConfiguration 
 {
     /// <summary>
+    /// Value for serializing <see cref="TypeWhereTheBindingPropertyIsDeclared"/>
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
+    public string FullComponentTypeName
+    {
+        get
+        {
+            if (TypeWhereTheBindingPropertyIsDeclared != null &&  TypeWhereTheBindingPropertyIsDeclared.FullName != null)
+                field = TypeWhereTheBindingPropertyIsDeclared.FullName;
+            return field;
+        }
+        init
+        {
+            Type? foundType = Assembly.GetExecutingAssembly().GetType(value);
+            if (foundType != null)
+            {
+                TypeWhereTheBindingPropertyIsDeclared = foundType;
+                field = foundType.FullName;
+            }
+            else
+                throw new ArgumentException($"Could not find type {value}");
+        }
+    } = "";
+    /// <summary>
     /// The type where the property is defined which should be connected over a Binding to the actual Component Property.
     /// null when this <see cref="ComponentBuilderAttributeConfiguration"/> is not a binding.
     /// </summary>
+    [JsonIgnore]
     public Type? TypeWhereTheBindingPropertyIsDeclared { get; init; }
     /// <summary>
     /// The name of the property which is defined in the <see cref="TypeWhereTheBindingPropertyIsDeclared"/> Type.
@@ -24,7 +52,13 @@ public class ComponentBuilderAttributeConfiguration
     /// It is necessary to build the Control too.
     /// </summary>
     public IComponentBuilderConfiguration? ControlValueConfig { get; init; }
+    /// <summary>
+    /// true when the user wants to create a component and insert it into a specific property in the current Component.
+    /// </summary>
     public bool HasAnotherControlAsValue => AttributeValue is IComponentBuilderConfiguration && ControlValueConfig != null;
+    /// <summary>
+    /// true when the attribute should be a binding with mode two-way.
+    /// </summary>
     public bool IsBindingProperty  => TypeWhereTheBindingPropertyIsDeclared != null && NameOfBindingProperty != null;
     
     private ComponentBuilderAttributeConfiguration(string attributeName, object attributeValue, Type? typeWhereTheBindingPropertyIsDeclared, string? nameOfBindingProperty)
@@ -33,7 +67,6 @@ public class ComponentBuilderAttributeConfiguration
         AttributeValue = attributeValue;
         TypeWhereTheBindingPropertyIsDeclared = typeWhereTheBindingPropertyIsDeclared;
         NameOfBindingProperty = nameOfBindingProperty;
-        
     }
     private ComponentBuilderAttributeConfiguration(string attributeName, IComponentBuilderConfiguration attributeValue)
     {
@@ -43,11 +76,10 @@ public class ComponentBuilderAttributeConfiguration
         NameOfBindingProperty = null;
         AttributeValue = attributeValue;
     }
-
+    
     public static ComponentBuilderAttributeConfiguration CreateConstantAttributeWithControlAsValue(string attributeName,
         IComponentBuilderConfiguration controlValueConfig)
     {
-        
         return new ComponentBuilderAttributeConfiguration(attributeName, controlValueConfig);
     }
     /// <summary>
