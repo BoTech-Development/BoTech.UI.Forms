@@ -107,4 +107,5 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
     public void OpenDescription() => ChangeOpenStatus(true);
 
     public void CloseDescription() => ChangeOpenStatus(false);
+    public Guid Id { get; init; }
 }

@@ -1,4 +1,5 @@
-﻿using BoTech.UI.Forms.Rendering;
+﻿using BoTech.UI.Forms.Controls;
+using BoTech.UI.Forms.Rendering;
 using BoTech.UI.Forms.Web.Html;
 
 namespace BoTech.UI.Forms.Web.Rendering;
@@ -10,6 +11,10 @@ public class ComponentBuilderConfiguration : IComponentBuilderConfiguration
     /// Only supported in the Web.
     /// </summary>
     public HtmlElements HtmlElementComponent { get; set; } = HtmlElements.None;
+
+    public Guid Id { get; init; }
+    public IFormElement ConfigurationForFormElement { get; init; }
+
     /// <summary>
     /// The Component Type that should be instantiated by the Componentbuilder
     /// </summary>

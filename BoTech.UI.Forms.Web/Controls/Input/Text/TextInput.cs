@@ -13,6 +13,7 @@ public class TextInput : ITextInput
     public bool IsEnabled { get; set; }
     public string Name { get; init; }
     public Guid Id { get; init; }
+    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; }
     public string Description { get; init; }
     public string Property { get; init; }
     public bool IsMultiline { get; init; }

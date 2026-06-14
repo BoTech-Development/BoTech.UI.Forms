@@ -18,6 +18,11 @@ public class VisualSurface : IVisualSurface<RenderFragment>
         _builder = new ComponentBuilder();
     }
 
+    public IRenderedComponentFinder<RenderFragment> GetRenderedComponentFinder()
+    {
+        throw new NotImplementedException();
+    }
+
     public RenderFragment? GetPrerenderedRootElement()
     {
         return _prerenderedContent;
