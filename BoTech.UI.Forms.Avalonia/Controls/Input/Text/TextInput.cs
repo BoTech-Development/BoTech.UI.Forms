@@ -21,7 +21,7 @@ public class TextInput : ITextInput
     /// </summary>
     public string Description { get; init; }
     public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
     public string Property { get; init; }
     public string Value { get; }
     public event EventHandler? OnUserUpdatedValue;
@@ -44,17 +44,10 @@ public class TextInput : ITextInput
             },
             Children = new List<IComponentBuilderConfiguration>()
             {
-                new ComponentBuilderConfiguration(this)
+                new InputNameLeftOfInput()
                 {
-                    ComponentType = typeof(TextBlock),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Text", Name + ":"),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontSize", 18),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontWeight", FontWeight.SemiBold),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
-                    }
-                },
+                    Name = this.Name,
+                }.BuildComponentBuilderConfigurationFromThis(),
                 new ComponentBuilderConfiguration(this)
                 {
                     ComponentType = typeof(TextBox),
