@@ -90,8 +90,6 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
             {
                 AvaloniaObject controlAsValue = BuildSpecificComponentFromConfig(instanceOfRootFormElement, attributeConfig.ControlValueConfig);
                 AddPrimitiveAttributeToControl(control, config.ComponentType, attributeConfig.AttributeName, controlAsValue);
-              /*  if (attributeConfig.ShouldStoreAnotherControlAsValueResult)
-                    StoreNewControlInFormElement(attributeConfig.NameOfPropertyToStoreTheResultValue, config.ConfigurationForFormElement, controlAsValue);*/
             }
             else
             {
@@ -99,19 +97,6 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
             }
         }
     }
-
- /*   private void StoreNewControlInFormElement(string propertyToStoreThNewInstanceIn, IFormElement formElement,
-        AvaloniaObject controlToStore)
-    {
-        PropertyInfo? propertyToSet = formElement.GetType().GetProperty(propertyToStoreThNewInstanceIn);
-        FieldInfo? fieldInfo = formElement.GetType().GetField(propertyToStoreThNewInstanceIn);
-        if (propertyToSet == null && fieldInfo == null)
-            throw new ArgumentException($"Property {propertyToStoreThNewInstanceIn} does not exist in the form element {formElement}, where the control {controlToStore} should be stored.");
-        if(propertyToSet != null)
-            propertyToSet.SetValue(formElement, controlToStore);
-        if(fieldInfo != null)
-            fieldInfo.SetValue(formElement, controlToStore);
-    }*/
     private void AddBindingAttributeToControl(AvaloniaObject controlInstance, Type typeOfControl, ComponentBuilderAttributeConfiguration config)
     {
         FieldInfo? avaloniaPropertyDescriptorPropertyInfo = typeOfControl.GetField(config.AttributeName);

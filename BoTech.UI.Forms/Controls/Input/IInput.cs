@@ -14,5 +14,5 @@ public interface IInput<T> : IFormElement, IDescribable, INameable
     /// Will be called by the backend when the user finished editing this Element.
     /// Classes that implement this interface must invoke this event.
     /// </summary>
-    public event EventHandler OnUserUpdatedValue;
+    public event EventHandler<ValueChangedEventArgs> OnUserUpdatedValue;
 }

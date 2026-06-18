@@ -20,7 +20,7 @@ public abstract class AInput : IInput<object>
     public Guid Id { get; init; }
     public string Property { get; init; }
     public object Value { get; set; }
-    public event EventHandler? OnUserUpdatedValue;
+    public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
 
     public bool IsVisible { get; set; }
     public bool IsEnabled { get; set; }

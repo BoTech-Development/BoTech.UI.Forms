@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using Avalonia.Controls;
 using Avalonia.Data;
+using BoTech.UI.Forms.Avalonia.Controls.Input.DateTime;
 using BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 using BoTech.UI.Forms.Avalonia.Controls.Layout;
 using BoTech.UI.Forms.Avalonia.Rendering;
@@ -31,7 +32,7 @@ public class MainViewModel : ViewModelBase
         VisualSurface surface = new VisualSurface();
         Stack stackPanel = new Stack()
         {
-            Orientation = Orientation.Horizontal
+            Orientation = Orientation.Vertical
         };
         TextInput textInput = new TextInput()
         {
@@ -57,11 +58,34 @@ public class MainViewModel : ViewModelBase
             },
             SortByRegex = "^F"
         };
+        TimeInput timeInput = new TimeInput()
+        {
+            Name = "When do you started your PC today?",
+            Description = "Please enter the time in 24H format when you started (turned on) your computer today.",
+        };
+        DateInput dateInput = new DateInput()
+        {
+            Name = "Birthday",
+            Description = "We need your birthday for confirming your age.",
+        };
+        dateInput.SetToCurrentDate();
+        DateTimeInput dateTimeInput = new DateTimeInput()
+        {
+            Name = "Preferred appointment",
+            Description = "Your new dentist appointment"
+        };
+        timeInput.SetToCurrentTime();
         stackPanel.Children.Add(textInput);
         stackPanel.Children.Add(searchTextInput);
+        stackPanel.Children.Add(timeInput);
+        stackPanel.Children.Add(dateInput);
+        stackPanel.Children.Add(dateTimeInput);
         OnOpenDescription = ReactiveCommand.Create(() =>
         {
             textInput.OpenDescription();
+          //  searchTextInput.OpenDescription();
+           // timeInput.OpenDescription();
+            Console.WriteLine(timeInput.Value.ToString());
         });
         
         surface.UpdateRootElement(stackPanel);

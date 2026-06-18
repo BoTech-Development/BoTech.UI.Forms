@@ -59,7 +59,9 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
                     ComponentType = typeof(MaterialIcon),
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Kind", MaterialIconKind.Help)
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Kind", MaterialIconKind.HelpCircleOutline),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Height", 24),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Width", 24)
                     }
                 }
             }

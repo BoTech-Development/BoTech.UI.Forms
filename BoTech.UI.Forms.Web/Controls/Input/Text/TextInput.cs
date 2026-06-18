@@ -1,4 +1,5 @@
 ﻿using BoTech.UI.Forms.Controls;
+using BoTech.UI.Forms.Controls.Input;
 using BoTech.UI.Forms.Controls.Input.Text;
 using BoTech.UI.Forms.Controls.Layout;
 using BoTech.UI.Forms.Rendering;
@@ -18,7 +19,7 @@ public class TextInput : ITextInput
     public string Property { get; init; }
     public bool IsMultiline { get; init; }
     public string Value { get; }
-    public event EventHandler? OnUserUpdatedValue;
+    public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
     
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {

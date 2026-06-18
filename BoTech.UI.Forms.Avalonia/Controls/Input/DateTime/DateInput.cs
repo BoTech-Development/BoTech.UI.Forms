@@ -1,23 +1,23 @@
-﻿using System.Text.RegularExpressions;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Layout;
-using Avalonia.Media;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
-using BoTech.UI.Forms.Controls.Input.Text;
+using BoTech.UI.Forms.Controls.Input.DateTime;
 using BoTech.UI.Forms.Rendering;
 
-namespace BoTech.UI.Forms.Avalonia.Controls.Input.Text;
+namespace BoTech.UI.Forms.Avalonia.Controls.Input.DateTime;
 
-public class SearchTextInput : ISearchTextInput
+public class DateInput : IDateInput
 {
+        public Guid Id { get; init; } =  Guid.NewGuid();
     public bool IsVisible { get; set; }
     public bool IsEnabled { get; set; }
     public string Name { get; init; }
-    public Guid Id { get; init; } = Guid.NewGuid();
+    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
+    public string Description { get; init; }
     public string Property { get; init; }
-    public string Value
+    public DateOnly Value
     {
         get => field;
         private set
@@ -26,13 +26,17 @@ public class SearchTextInput : ISearchTextInput
             field = value;
         }
     }
+    public DateTimeOffset SelectedDateTime
+    {
+        get => field;
+        set
+        {
+            field = value;
+            Value = DateOnly.FromDateTime(field.DateTime);
+        }
+    }
+
     public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
-    public bool IsMultiline { get; init; }
-    public string StaticItemSource { get; set; }
-    public IEnumerable<string> ItemSource { get; set; }
-    public string SortByRegex { get; set; }
-    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
-    public string Description { get; init; }
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
         HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
@@ -41,7 +45,6 @@ public class SearchTextInput : ISearchTextInput
             IsVisible = this.IsVisible,
             HelpText = this.Description,
         };
-        Regex regex = new Regex(SortByRegex);
         return new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(StackPanel),
@@ -49,7 +52,6 @@ public class SearchTextInput : ISearchTextInput
             {
                 ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
             },
-           
             Children = new List<IComponentBuilderConfiguration>()
             {
                 new InputNameLeftOfInput()
@@ -58,42 +60,32 @@ public class SearchTextInput : ISearchTextInput
                 }.BuildComponentBuilderConfigurationFromThis(),
                 new ComponentBuilderConfiguration(this)
                 {
-                    ComponentType = typeof(AutoCompleteBox),
+                    ComponentType = typeof(DatePicker),
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedItem", Value, "Value",
-                            typeof(TextInput)),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemsSource",  ItemSource),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
-                      /*  ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemFilter", (string search, string item) =>
-                        {
-                            if (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))
-                                return true;
-                            return regex.IsMatch(search);
-                        }),*/
+                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", Value, "SelectedDateTime",
+                            typeof(DateInput)),
                     }
                 },
                 HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
             }
         };
     }
-    
+
     public void TryToAddChild(IFormElement child)
     {
         throw new NotSupportedException();
     }
 
 
-    public void OpenDescription()
+    public void OpenDescription() => HelpDescriptionOfFormElement.OpenDescription();
+    
+
+    public void CloseDescription() => HelpDescriptionOfFormElement.CloseDescription();
+
+
+    public void SetToCurrentDate()
     {
-        throw new NotImplementedException();
+        SelectedDateTime = DateTimeOffset.Now;
     }
-
-    public void CloseDescription()
-    {
-        throw new NotImplementedException();
-    }
-
-
-
 }

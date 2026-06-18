@@ -6,6 +6,7 @@ using Avalonia.Layout;
 using Avalonia.Media;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
+using BoTech.UI.Forms.Controls.Input;
 using BoTech.UI.Forms.Controls.Input.Text;
 using BoTech.UI.Forms.Rendering;
 
@@ -23,8 +24,17 @@ public class TextInput : ITextInput
     public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
     public Guid Id { get; init; } = Guid.NewGuid();
     public string Property { get; init; }
-    public string Value { get; }
-    public event EventHandler? OnUserUpdatedValue;
+    public string Value
+    {
+        get => field;
+        private set
+        {
+            OnUserUpdatedValue?.Invoke(this,new ValueChangedEventArgs(field, value));
+            field = value;
+        }
+    }
+
+    public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
     public bool IsMultiline { get; init; }
 
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
@@ -57,6 +67,7 @@ public class TextInput : ITextInput
                             typeof(TextInput)),
                         ComponentBuilderAttributeConfiguration.CreateConstantAttribute("AcceptsReturn", IsMultiline),
                         ComponentBuilderAttributeConfiguration.CreateConstantAttribute("IsReadOnly", IsEnabled),
+                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
                     }
                 },
                 HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
