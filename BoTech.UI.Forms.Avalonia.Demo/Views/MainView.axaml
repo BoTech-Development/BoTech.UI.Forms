@@ -13,7 +13,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <StackPanel>
-        <starInput:StarInputControl/>
+        <starInput:StarInputControl CountOfStarsToDisplay="20"/>
         <TextBlock Text="Binding Test:"/>
         <ContentControl Content="{Binding Content}" />
         <TextBlock Text="BoTech.UI.Forms test:"/>

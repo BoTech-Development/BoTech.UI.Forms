@@ -19,33 +19,89 @@ public class StarInputControl : TemplatedControl
         set => SetValue(StarsToDisplayProperty, value);
     }
 
-    public StarInputControl()
+    public static readonly StyledProperty<int> CountOfStarsToDisplayProperty =
+        AvaloniaProperty.Register<StarInputControl, int>(nameof(CountOfStarsToDisplay));
+
+    public int CountOfStarsToDisplay
     {
-        SetValue(StarsToDisplayProperty, new ObservableCollection<StarItem>
+        get =>
+            GetValue(CountOfStarsToDisplayProperty);
+        set
         {
-            new StarItem(this, StarStatus.FullFilled),
-            new StarItem(this, StarStatus.FullFilled),
-            new StarItem(this, StarStatus.FullFilled),
-            new StarItem(this, StarStatus.HalfFilled),
-            new StarItem(this, StarStatus.Border)
-        });
+            SetValue(CountOfStarsToDisplayProperty, value); 
+            InitializeStars();
+        }
+    }
+    
+    public static readonly StyledProperty<float> CurrentValueProperty =
+        AvaloniaProperty.Register<StarInputControl, float>(nameof(CurrentValue));
+
+    public float CurrentValue
+    {
+        get => GetValue(CurrentValueProperty);
+        set => SetValue(CurrentValueProperty, value); 
     }
 
+    public StarInputControl()
+    {
+    }
+
+    private void InitializeStars()
+    {
+        List<StarItem> starsToDisplay = new List<StarItem>();
+        for (int i = 0; i < CountOfStarsToDisplay; i++)
+        {
+            StarItem star = new StarItem(this, StarStatus.Border);
+            starsToDisplay.Add(star);
+        }
+        SetValue(StarsToDisplayProperty, new ObservableCollection<StarItem>(starsToDisplay));
+    }
     public void OnStarClicked(StarItem onClickStar)
     {
-        onClickStar.Status = NextStatus(onClickStar.Status);
+        int countOfStarsToUpdate = StarsToDisplay.IndexOf(onClickStar);
+        if(countOfStarsToUpdate == -1)
+            throw new InvalidOperationException("Cannot find the star which the user selected.");
+        UpdateStarSelection(countOfStarsToUpdate, NextStatus(onClickStar.Status));
+    }
 
-        StarStatus newStatus = StarStatus.Border;
-        if(onClickStar.Status == StarStatus.FullFilled || onClickStar.Status == StarStatus.HalfFilled) 
-            newStatus = StarStatus.FullFilled;
-        foreach (StarItem star in StarsToDisplay)
+    private void UpdateStarSelection(int countOfFilledStars, StarStatus lastStarStatus)
+    {
+        UpdateValue(countOfFilledStars, lastStarStatus);
+        UpdateValueVisually(countOfFilledStars, lastStarStatus);
+    }
+
+    private void UpdateValue(int countOfFilledStars, StarStatus lastStarStatus)
+    {
+        if (lastStarStatus == StarStatus.FullFilled)
         {
-            if (star == onClickStar)
-            {
-                newStatus = StarStatus.Border;
-                continue;
-            }
-            star.Status = newStatus;
+            CurrentValue = countOfFilledStars + 1;
+        }
+        else if (lastStarStatus == StarStatus.HalfFilled)
+        {
+            CurrentValue = countOfFilledStars + 0.5f;
+        }
+        else
+        {
+            CurrentValue = 0;
+        }
+        Console.WriteLine($"CurrentValue: {CurrentValue}; countOfFilledStars: {countOfFilledStars}");
+    }
+    private void UpdateValueVisually(int countOfFilledStars, StarStatus lastStarStatus)
+    {
+        StarStatus newStatus = StarStatus.Border;
+        if(lastStarStatus == StarStatus.FullFilled || lastStarStatus == StarStatus.HalfFilled) 
+            newStatus = StarStatus.FullFilled;
+        // Fill all before if necessary
+        for (int i = 0; i <= countOfFilledStars - 1; i++)
+        {
+            StarsToDisplay[i].Status = newStatus;
+        }
+        // fill clicked when necessary
+        StarsToDisplay[countOfFilledStars].Status = lastStarStatus;
+        // clear all after if there are any stars
+        for (int i = countOfFilledStars + 1; i < CountOfStarsToDisplay; i++)
+        {
+            StarsToDisplay[i].Status = StarStatus.Border;
         }
     }
 
