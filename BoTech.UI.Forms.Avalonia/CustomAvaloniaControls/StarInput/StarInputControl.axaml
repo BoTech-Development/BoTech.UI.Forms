@@ -1,0 +1,38 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput"
+        xmlns:local="using:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput"
+        xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
+    <Design.PreviewWith>
+        <controls:StarInputControl />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|StarInputControl">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="controls:StarInputControl">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Stars:</TextBlock>
+                    <ItemsControl ItemsSource="{TemplateBinding  StarsToDisplay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="local:StarItem">
+                                <Button Command="{Binding OnUpdateStarSelection}"
+                                        Padding="0"
+                                        Margin="0"
+                                        Background="Transparent"
+                                        CornerRadius="0">
+                                    <avalonia:MaterialIcon Kind="{Binding IconToDisplay}" IconSize="26" MinWidth="26" MinHeight="26"/>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

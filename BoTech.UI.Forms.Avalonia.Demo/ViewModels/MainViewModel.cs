@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reactive;
 using Avalonia.Controls;
 using Avalonia.Data;
 using BoTech.UI.Forms.Avalonia.Controls.Input.DateTime;
+using BoTech.UI.Forms.Avalonia.Controls.Input.Numeric;
 using BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 using BoTech.UI.Forms.Avalonia.Controls.Layout;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls.Layout;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace BoTech.UI.Forms.Avalonia.Demo.ViewModels;
 
@@ -17,7 +18,7 @@ public class MainViewModel : ViewModelBase
     public string Greeting { get; } = "Welcome to Avalonia!";
     public Control Content { get; set; }
     public Control Form { get; set; }
-    public ReactiveCommand<Unit, Unit> OnOpenDescription { get; set; }
+    public ReactiveCommand<RxVoid, RxVoid> OnOpenDescription { get; set; }
     public MainViewModel()
     {
         
@@ -74,12 +75,22 @@ public class MainViewModel : ViewModelBase
             Name = "Preferred appointment",
             Description = "Your new dentist appointment"
         };
+        NumberInput<int> numberInput = new NumberInput<int>()
+        {
+            Name = "How many lines of clean code did you wrote in your life?",
+            Description = "We need this info to evaluate if you have real programming skills. Max is 100000",
+            Maximum = 100000,
+            Minimum = 0,
+            Increment = 10
+        };
+        
         timeInput.SetToCurrentTime();
         stackPanel.Children.Add(textInput);
         stackPanel.Children.Add(searchTextInput);
         stackPanel.Children.Add(timeInput);
         stackPanel.Children.Add(dateInput);
         stackPanel.Children.Add(dateTimeInput);
+        stackPanel.Children.Add(numberInput);
         OnOpenDescription = ReactiveCommand.Create(() =>
         {
             textInput.OpenDescription();

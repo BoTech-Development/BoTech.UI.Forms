@@ -1,5 +1,10 @@
 ﻿
 
+using Android.Runtime;
+using Avalonia;
+using Avalonia.Android;
+using ReactiveUI.Avalonia;
+
 namespace BoTech.UI.Forms.Avalonia.Demo.Android
 {
     [Application]
@@ -13,7 +18,7 @@ namespace BoTech.UI.Forms.Avalonia.Demo.Android
         {
             return base.CustomizeAppBuilder(builder)
                 .WithInterFont()
-                .UseReactiveUI();
+                .UseReactiveUI((uiBuilder => { }));
         }
     }
 }

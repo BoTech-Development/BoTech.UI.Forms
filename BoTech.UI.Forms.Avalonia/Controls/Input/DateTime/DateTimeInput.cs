@@ -76,7 +76,7 @@ public class DateTimeInput : IDateTimeInput
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                     {
                         ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", SelectedTime, "SelectedTime",
-                            typeof(TimeInput)),
+                            typeof(DateTimeInput)),
                         ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
                         ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1),
                     }
@@ -87,7 +87,7 @@ public class DateTimeInput : IDateTimeInput
                     ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                     {
                         ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", SelectedDate, "SelectedDate",
-                            typeof(DateInput)),
+                            typeof(DateTimeInput)),
                     }
                 },
                 HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
@@ -108,6 +108,7 @@ public class DateTimeInput : IDateTimeInput
 
     public void SetToCurrentDateTime()
     {
+        Value = System.DateTime.Now;
         //SelectedTime = TimeOnly.FromDateTime(System.DateTime.Now).ToTimeSpan();
     }
 

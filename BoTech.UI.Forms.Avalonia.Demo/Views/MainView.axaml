@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:BoTech.UI.Forms.Avalonia.Demo.ViewModels"
+             xmlns:starInput="clr-namespace:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;assembly=BoTech.UI.Forms.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BoTech.UI.Forms.Avalonia.Demo.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -12,6 +13,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <StackPanel>
+        <starInput:StarInputControl/>
         <TextBlock Text="Binding Test:"/>
         <ContentControl Content="{Binding Content}" />
         <TextBlock Text="BoTech.UI.Forms test:"/>
@@ -20,6 +22,7 @@
         </Button>
         <TextBlock Text="Render result:"/>
         <ContentControl Content="{Binding Form}" />
+        
     </StackPanel>
  
 </UserControl>
