@@ -76,7 +76,12 @@ public class ComponentBuilderAttributeConfiguration
         NameOfBindingProperty = null;
         AttributeValue = attributeValue;
     }
-    
+    /// <summary>
+    /// This method can be used to create a control attribute which will be inserted into the control as a child control.
+    /// </summary>
+    /// <param name="attributeName">The name of the attribute in the control.</param>
+    /// <param name="controlValueConfig">the value to set</param>
+    /// <returns>the config which will be apllied with the <see cref="IComponentBuilder{TControlTypeBase}"/></returns>
     public static ComponentBuilderAttributeConfiguration CreateConstantAttributeWithControlAsValue(string attributeName,
         IComponentBuilderConfiguration controlValueConfig)
     {

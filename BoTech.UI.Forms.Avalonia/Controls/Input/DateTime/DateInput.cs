@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
@@ -10,11 +11,11 @@ namespace BoTech.UI.Forms.Avalonia.Controls.Input.DateTime;
 
 public class DateInput : IDateInput
 {
-        public Guid Id { get; init; } =  Guid.NewGuid();
+    public Guid Id { get; init; } =  Guid.NewGuid();
     public bool IsVisible { get; set; }
     public bool IsEnabled { get; set; }
     public string Name { get; init; }
-    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
+    private IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get;  set; }
     public string Description { get; init; }
     public string Property { get; init; }
     public DateOnly Value
@@ -39,37 +40,17 @@ public class DateInput : IDateInput
     public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
-        {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
-        return new ComponentBuilderConfiguration(this)
-        {
-            ComponentType = typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<DateOnly>(
+            new ComponentBuilderConfiguration(this)
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
-            },
-            Children = new List<IComponentBuilderConfiguration>()
-            {
-                new InputNameLeftOfInput()
+                ComponentType = typeof(DatePicker),
+                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                 {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(DatePicker),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", Value, "SelectedDateTime",
-                            typeof(DateInput)),
-                    }
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
-            }
-        };
+                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", Value, "SelectedDateTime", typeof(DateInput))
+                }
+            },this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
 
     public void TryToAddChild(IFormElement child)

@@ -4,25 +4,223 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:BoTech.UI.Forms.Avalonia.Demo.ViewModels"
              xmlns:starInput="clr-namespace:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;assembly=BoTech.UI.Forms.Avalonia"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BoTech.UI.Forms.Avalonia.Demo.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
     <StackPanel>
-        <starInput:StarInputControl CountOfStarsToDisplay="20"/>
-        <TextBlock Text="Binding Test:"/>
+
+
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0,0,5,0">
+                <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <ProgressBar Maximum="100" 
+                             Value="25"
+                             Margin="0,3,0,3"/>
+                <Border CornerRadius="4"
+                        BorderBrush="Green"
+                        BorderThickness="2"
+                        Background="LightGreen"
+                        Opacity="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="10"
+                                Margin="5,0,0,0">
+                            <avalonia:MaterialIcon Kind="AboutCircle" IconSize="48" />
+                        </Border>
+                        <StackPanel Orientation="Vertical"
+                                    Margin="10,0,10,0"
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold"
+                                       Text="Personal Info" />
+                            <TextBlock Text="We need some personal Info to verify your identity." />
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontWeight="DemiBold"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,5,0">
+                            1/5
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Margin="5,0,0,0">
+                <avalonia:MaterialIcon Kind="ArrowRightBoldCircleOutline" IconSize="24" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0,0,5,0">
+                <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <ProgressBar Maximum="100" 
+                             Value="25"
+                             Margin="0,3,0,3"/>
+                <Border CornerRadius="4"
+                        BorderBrush="Red"
+                        BorderThickness="2"
+                        Background="LightCoral"
+                        Opacity="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="10"
+                                Margin="5,0,0,0">
+                            <avalonia:MaterialIcon Kind="AboutCircle" IconSize="48" />
+                        </Border>
+                        <StackPanel Orientation="Vertical"
+                                    Margin="10,0,10,0"
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold"
+                                       Text="Personal Info" />
+                            <TextBlock Text="We need some personal Info to verify your identity." />
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontWeight="DemiBold"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,5,0">
+                            1/5
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Margin="5,0,0,0">
+                <avalonia:MaterialIcon Kind="ArrowRightBoldCircleOutline" IconSize="24" />
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0,0,5,0">
+                <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <ProgressBar Maximum="100" 
+                             Value="25"
+                             Margin="0,3,0,3"/>
+                <Border CornerRadius="4"
+                        BorderBrush="Orange"
+                        BorderThickness="2"
+                        Background="LightYellow"
+                        Opacity="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="10"
+                                Margin="5,0,0,0">
+                            <avalonia:MaterialIcon Kind="AboutCircle" IconSize="48" />
+                        </Border>
+                        <StackPanel Orientation="Vertical"
+                                    Margin="10,0,10,0"
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold"
+                                       Text="Personal Info" />
+                            <TextBlock Text="We need some personal Info to verify your identity." />
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontWeight="DemiBold"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,5,0">
+                            1/5
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Margin="5,0,0,0">
+                <avalonia:MaterialIcon Kind="ArrowRightBoldCircleOutline" IconSize="24" />
+            </Button>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0,0,5,0">
+                <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <ProgressBar Maximum="100" 
+                             Value="25"
+                             Margin="0,3,0,3"/>
+                <Border CornerRadius="4"
+                        BorderBrush="Blue"
+                        BorderThickness="2"
+                        Background="LightBlue"
+                        Opacity="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="10"
+                                Margin="5,0,0,0">
+                            <avalonia:MaterialIcon Kind="AboutCircle" IconSize="48" />
+                        </Border>
+                        <StackPanel Orientation="Vertical"
+                                    Margin="10,0,10,0"
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold"
+                                       Text="Personal Info" />
+                            <TextBlock Text="We need some personal Info to verify your identity." />
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontWeight="DemiBold"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,5,0">
+                            1/5
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Margin="5,0,0,0">
+                <avalonia:MaterialIcon Kind="ArrowRightBoldCircleOutline" IconSize="24" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0,0,5,0">
+                <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <ProgressBar Maximum="100" 
+                             Value="25"
+                             Margin="0,3,0,3"/>
+                <Border CornerRadius="4"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        Background="LightGray"
+                        Opacity="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Border CornerRadius="10"
+                                Margin="5,0,0,0">
+                            <avalonia:MaterialIcon Kind="AboutCircle" IconSize="48" />
+                        </Border>
+                        <StackPanel Orientation="Vertical"
+                                    Margin="10,0,10,0"
+                                    VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold"
+                                       Text="Personal Info" />
+                            <TextBlock Text="We need some personal Info to verify your identity." />
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"
+                                   FontWeight="DemiBold"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,5,0">
+                            1/5
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Button Margin="5,0,0,0">
+                <avalonia:MaterialIcon Kind="ArrowRightBoldCircleOutline" IconSize="24" />
+            </Button>
+        </StackPanel>
+        
+       <!-- <starInput:StarInputControl Minimum="1"/>-->
+        <TextBlock Text="Binding Test:" />
         <ContentControl Content="{Binding Content}" />
-        <TextBlock Text="BoTech.UI.Forms test:"/>
+        <TextBlock Text="BoTech.UI.Forms test:" />
         <Button Command="{Binding OnOpenDescription}">
             Open all Description Blocks
         </Button>
-        <TextBlock Text="Render result:"/>
+        <TextBlock Text="Render result:" />
         <ContentControl Content="{Binding Form}" />
-        
+
     </StackPanel>
- 
+
 </UserControl>

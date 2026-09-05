@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
+using BoTech.UI.Forms.Avalonia.Controls.Input.Numeric;
+using BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
 using BoTech.UI.Forms.Controls.Input.Text;
 using BoTech.UI.Forms.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 
@@ -39,40 +42,19 @@ public class TextInput : ITextInput
 
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<string>(new ComponentBuilderConfiguration(this)
         {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
-        return new ComponentBuilderConfiguration(this)
-        {
-            ComponentType = typeof(StackPanel),
+            ComponentType = typeof(TextBox),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
-            },
-            Children = new List<IComponentBuilderConfiguration>()
-            {
-                new InputNameLeftOfInput()
-                {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(TextBox),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("TextProperty", Value, "Value",
-                            typeof(TextInput)),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("AcceptsReturn", IsMultiline),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("IsReadOnly", IsEnabled),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
-                    }
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("TextProperty", Value, "Value", typeof(TextInput)),
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("AcceptsReturn", IsMultiline),
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("IsReadOnly", IsEnabled),
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center)
             }
-        };
+        }, this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
 
     public void TryToAddChild(IFormElement child)

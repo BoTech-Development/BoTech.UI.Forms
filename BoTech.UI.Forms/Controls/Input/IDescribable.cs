@@ -5,7 +5,7 @@ public interface IDescribable
     /// <summary>
     /// This IFormElement displays the flyout which contains the help info.
     /// </summary>
-    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; }
+    //public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; }
     public string Description { get; init; }
     /// <summary>
     /// Opens the Description flyout

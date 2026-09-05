@@ -5,6 +5,8 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Material.Icons;
+using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;
 
@@ -19,20 +21,35 @@ public class StarInputControl : TemplatedControl
         set => SetValue(StarsToDisplayProperty, value);
     }
 
-    public static readonly StyledProperty<int> CountOfStarsToDisplayProperty =
-        AvaloniaProperty.Register<StarInputControl, int>(nameof(CountOfStarsToDisplay));
+    public static readonly StyledProperty<byte> MaximumProperty =
+        AvaloniaProperty.Register<StarInputControl, byte>(nameof(Maximum));
 
-    public int CountOfStarsToDisplay
+    public byte Maximum
     {
         get =>
-            GetValue(CountOfStarsToDisplayProperty);
+            GetValue(MaximumProperty);
         set
         {
-            SetValue(CountOfStarsToDisplayProperty, value); 
+            SetValue(MaximumProperty, value); 
             InitializeStars();
         }
     }
-    
+
+    public static readonly StyledProperty<byte> MinimumProperty =
+    AvaloniaProperty.Register<StarInputControl, byte>(nameof(Minimum));
+
+    public byte Minimum
+    {
+        get =>
+            GetValue(MinimumProperty);
+        set
+        {
+            SetValue(MinimumProperty, value);
+            InitializeStars();
+        }
+    }
+
+
     public static readonly StyledProperty<float> CurrentValueProperty =
         AvaloniaProperty.Register<StarInputControl, float>(nameof(CurrentValue));
 
@@ -49,14 +66,18 @@ public class StarInputControl : TemplatedControl
     private void InitializeStars()
     {
         List<StarItem> starsToDisplay = new List<StarItem>();
-        for (int i = 0; i < CountOfStarsToDisplay; i++)
+        for (int i = 0; i < Maximum; i++)
         {
-            StarItem star = new StarItem(this, StarStatus.Border);
+            StarItem star;
+            if (i <= Minimum)
+                star = StarItem.CreateConstantNotEditableStar(this, StarStatus.FullFilled);
+            else
+                star = new StarItem(this, StarStatus.Border);
             starsToDisplay.Add(star);
         }
         SetValue(StarsToDisplayProperty, new ObservableCollection<StarItem>(starsToDisplay));
     }
-    public void OnStarClicked(StarItem onClickStar)
+    private void OnStarClicked(StarItem onClickStar)
     {
         int countOfStarsToUpdate = StarsToDisplay.IndexOf(onClickStar);
         if(countOfStarsToUpdate == -1)
@@ -99,7 +120,7 @@ public class StarInputControl : TemplatedControl
         // fill clicked when necessary
         StarsToDisplay[countOfFilledStars].Status = lastStarStatus;
         // clear all after if there are any stars
-        for (int i = countOfFilledStars + 1; i < CountOfStarsToDisplay; i++)
+        for (int i = countOfFilledStars + 1; i < Maximum; i++)
         {
             StarsToDisplay[i].Status = StarStatus.Border;
         }
@@ -117,5 +138,43 @@ public class StarInputControl : TemplatedControl
                 return StarStatus.Border;
         }
         throw new ArgumentOutOfRangeException(nameof(current));
+    }
+    
+    public class StarItem : ReactiveObject
+    {
+        public StarStatus Status
+        {
+            get => field;
+            set
+            {
+                if(value == StarStatus.FullFilled)
+                    IconToDisplay = MaterialIconKind.Star;
+                else if(value == StarStatus.HalfFilled)
+                    IconToDisplay = MaterialIconKind.StarHalf;
+                else if(value == StarStatus.Border)
+                    IconToDisplay = MaterialIconKind.StarBorder;
+                field = value;
+            }
+        }
+        public MaterialIconKind IconToDisplay { get => field; set => this.RaiseAndSetIfChanged(ref field, value); }
+
+        public bool IsUnderlyingButtonEnabled { get => field; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
+
+        public ReactiveCommand<RxVoid, RxVoid> OnUpdateStarSelection { get; set; }
+        public static StarItem CreateConstantNotEditableStar(StarInputControl control, StarStatus status)
+        {
+            return new StarItem(control, status)
+            {
+                IsUnderlyingButtonEnabled = false
+            };
+        }
+        public StarItem(StarInputControl control, StarStatus status)
+        {
+            this.Status = status;
+            OnUpdateStarSelection = ReactiveCommand.Create(() =>
+            {
+                control.OnStarClicked(this);
+            });
+        }
     }
 }

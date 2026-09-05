@@ -13,7 +13,6 @@ namespace BoTech.UI.Forms.Avalonia.Rendering;
 
 public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
 {
-
     public AvaloniaObject BuildComponent(IFormElement instanceOfRootFormElement)
     {
        // _currentFormElement = instanceOfRootFormElement;
@@ -131,5 +130,4 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
         if(propertyToSet == null) throw new ArgumentException($"The property with the given name ({propertyName}) doesn't exist in the given control type ({typeOfControl.FullName})");
         propertyToSet.SetValue(control, propertyValue);
     }
-    
 }

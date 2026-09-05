@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
@@ -14,7 +15,7 @@ public class DateTimeInput : IDateTimeInput
     public bool IsVisible { get; set; }
     public bool IsEnabled { get; set; }
     public string Name { get; init; }
-    public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
+    private IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get;  set; }
     public string Description { get; init; }
     public string Property { get; init; }
     private System.DateTime _value =  System.DateTime.MinValue + new TimeSpan(365, 0, 0, 0);
@@ -50,49 +51,29 @@ public class DateTimeInput : IDateTimeInput
 
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<System.DateTime>(new List<IComponentBuilderConfiguration>
         {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
-
-        return new ComponentBuilderConfiguration(this)
-        {
-            ComponentType = typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            new ComponentBuilderConfiguration(this)
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
+                ComponentType = typeof(TimePicker),
+                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                {
+                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", SelectedTime, "SelectedTime", typeof(DateTimeInput)),
+                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
+                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1)
+                }
             },
-            Children = new List<IComponentBuilderConfiguration>()
+            new ComponentBuilderConfiguration(this)
             {
-                new InputNameLeftOfInput()
+                ComponentType = typeof(DatePicker),
+                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                 {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(TimePicker),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", SelectedTime, "SelectedTime",
-                            typeof(DateTimeInput)),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1),
-                    }
-                },
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(DatePicker),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", SelectedDate, "SelectedDate",
-                            typeof(DateTimeInput)),
-                    }
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
+                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", SelectedDate, "SelectedDate", typeof(DateTimeInput))
+                }
             }
-        };
+        }, this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
 
     public void TryToAddChild(IFormElement child)

@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Layout;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
 using BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
@@ -38,40 +39,20 @@ public class TimeInput : ITimeInput
 
     public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
-    {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
-        {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
-        return new ComponentBuilderConfiguration(this)
-        {
-            ComponentType = typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+    {  
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<TimeOnly>(
+            new ComponentBuilderConfiguration(this)
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
-            },
-            Children = new List<IComponentBuilderConfiguration>()
-            {
-                new InputNameLeftOfInput()
+                ComponentType = typeof(TimePicker),
+                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
                 {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(TimePicker),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", Value, "SelectedTime",
-                            typeof(TimeInput)),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1),
-                    }
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
-            }
-        };
+                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", Value, "SelectedTime", typeof(TimeInput)),
+                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
+                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1)
+                }
+            }, this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
 
     public void TryToAddChild(IFormElement child)

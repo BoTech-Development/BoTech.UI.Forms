@@ -1,7 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput"
-        xmlns:local="using:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput"
         xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia">
     <Design.PreviewWith>
         <controls:StarInputControl />
@@ -20,12 +19,13 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="local:StarItem">
+                            <DataTemplate DataType="controls:StarInputControl+StarItem">
                                 <Button Command="{Binding OnUpdateStarSelection}"
                                         Padding="0"
                                         Margin="0"
                                         Background="Transparent"
-                                        CornerRadius="0">
+                                        CornerRadius="0"
+                                        IsEnabled="{Binding IsUnderlyingButtonEnabled}">
                                     <avalonia:MaterialIcon Kind="{Binding IconToDisplay}" IconSize="26" MinWidth="26" MinHeight="26"/>
                                 </Button>
                             </DataTemplate>

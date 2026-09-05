@@ -12,7 +12,7 @@ public interface IStarInput : INumberInput<byte>
     /// <summary>
     /// The count of stars, which the user has checked (by clicking each star will be marked)
     /// </summary>
-    public int NumberOfStarsThatAreChecked { get; init; }
+    public byte NumberOfStarsThatAreChecked { get; init; }
     /// <summary>
     /// If true, the last star is not fully marked, but half.
     /// </summary>
@@ -20,5 +20,5 @@ public interface IStarInput : INumberInput<byte>
     /// <summary>
     /// The count of stars, which the user has not checked (by clicking each star will be marked and clicking on it again the star will be unchecked)
     /// </summary>
-    public int NumberOfStarsThatAreUnchecked { get; init; }
+    public byte NumberOfStarsThatAreUnchecked { get; init; }
 }

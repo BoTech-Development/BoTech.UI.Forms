@@ -1,12 +1,13 @@
-﻿using System.Text.RegularExpressions;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
 using BoTech.UI.Forms.Controls.Input.Text;
 using BoTech.UI.Forms.Rendering;
+using System.Text.RegularExpressions;
 
 namespace BoTech.UI.Forms.Avalonia.Controls.Input.Text;
 
@@ -35,47 +36,25 @@ public class SearchTextInput : ISearchTextInput
     public string Description { get; init; }
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
-        {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
         Regex regex = new Regex(SortByRegex);
-        return new ComponentBuilderConfiguration(this)
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<string>(new ComponentBuilderConfiguration(this)
         {
-            ComponentType = typeof(StackPanel),
+            ComponentType = typeof(AutoCompleteBox),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
-            },
-           
-            Children = new List<IComponentBuilderConfiguration>()
-            {
-                new InputNameLeftOfInput()
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedItem", Value, "Value", typeof(TextInput)),
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemsSource",  ItemSource),
+                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
+                /*  ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemFilter", (string search, string item) =>
                 {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(AutoCompleteBox),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
-                    {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedItem", Value, "Value",
-                            typeof(TextInput)),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemsSource",  ItemSource),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
-                      /*  ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemFilter", (string search, string item) =>
-                        {
-                            if (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))
-                                return true;
-                            return regex.IsMatch(search);
-                        }),*/
-                    }
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
+                    if (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))
+                        return true;
+                    return regex.IsMatch(search);
+                }),*/
             }
-        };
+        }, this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
     
     public void TryToAddChild(IFormElement child)

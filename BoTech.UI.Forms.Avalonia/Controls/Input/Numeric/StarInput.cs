@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using BoTech.UI.Forms.Avalonia.Controls.Builder;
+using BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Input;
@@ -16,9 +18,9 @@ public class StarInput : IStarInput
     public byte Value { get; }
     public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
     public byte Maximum { get; set; }
-    public int NumberOfStarsThatAreChecked { get; init; }
+    public byte NumberOfStarsThatAreChecked { get; init; }
     public bool IsHalfOfLastStarChecked { get; init; }
-    public int NumberOfStarsThatAreUnchecked { get; init; }
+    public byte NumberOfStarsThatAreUnchecked { get; init; }
     public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
     
     public string Description { get; init; }
@@ -28,34 +30,22 @@ public class StarInput : IStarInput
     public bool IsEnabled { get; set; }
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        HelpDescriptionOfFormElement = new HelpDescriptionOfFormElement()
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<byte>(new ComponentBuilderConfiguration(this)
         {
-            IsEnabled = this.IsEnabled,
-            IsVisible = this.IsVisible,
-            HelpText = this.Description,
-        };
-        return new ComponentBuilderConfiguration(this)
-        {
-            ComponentType =
-                typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentType = typeof(StarInputControl),
+            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
-            },
-            Children = new List<IComponentBuilderConfiguration>()
-            {
-                new InputNameLeftOfInput()
-                {
-                    Name = this.Name,
-                }.BuildComponentBuilderConfigurationFromThis(),
-                new ComponentBuilderConfiguration(this)
-                {
-                    ComponentType = typeof(NumericUpDown),
-
-                },
-                HelpDescriptionOfFormElement.BuildComponentBuilderConfigurationFromThis()
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("CountOfStarsToDisplayProperty", 5, nameof(Maximum), typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Minimum", Minimum, nameof(Minimum), typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Increment", Increment, nameof(Increment), typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Value", Value, nameof(Value), typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("IsVisible", IsVisible, nameof(IsVisible), typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("IsEnabled", IsEnabled, nameof(IsEnabled), typeof(StarInput))
             }
-        };
+
+        }, this);
+        HelpDescriptionOfFormElement = helpInfo;
+        return mainConfig;
     }
 
     public void TryToAddChild(IFormElement child)
@@ -73,7 +63,4 @@ public class StarInput : IStarInput
     {
         throw new NotImplementedException();
     }
-
-
-
 }
