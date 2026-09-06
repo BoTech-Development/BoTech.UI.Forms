@@ -9,12 +9,6 @@ public interface IRenderedComponentFinder<TControlTypeBase>  where TControlTypeB
 {
     public void Clear();
     public void AddRenderedComponent(Guid id, IFormElement renderedFor, TControlTypeBase control);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public TControlTypeBase FindInVisualTreeById(Guid id);
     public TControlTypeBase FindInVisualTreeByNameOfFormElement(string name);
     public TControlTypeBase FindRootComponentInVisualTreeForFormElement(IFormElement formElement);

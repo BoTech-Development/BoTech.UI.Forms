@@ -83,6 +83,14 @@ public class MainViewModel : ViewModelBase
             Minimum = 0,
             Increment = 10
         };
+
+        StarInput startInput = new StarInput()
+        {
+            Description = "Please rate this application.",
+            Name = "Rating",
+            Maximum = 10,
+            Minimum = 4,
+        };
         
         timeInput.SetToCurrentTime();
         stackPanel.Children.Add(textInput);
@@ -91,6 +99,7 @@ public class MainViewModel : ViewModelBase
         stackPanel.Children.Add(dateInput);
         stackPanel.Children.Add(dateTimeInput);
         stackPanel.Children.Add(numberInput);
+        stackPanel.Children.Add(startInput);
         OnOpenDescription = ReactiveCommand.Create(() =>
         {
             textInput.OpenDescription();

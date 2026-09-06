@@ -15,32 +15,28 @@ public class StarInput : IStarInput
     public Guid Id { get; init; } = Guid.NewGuid();
     public string Name { get; init; }
     public string Property { get; init; }
-    public byte Value { get; }
     public event EventHandler<ValueChangedEventArgs>? OnUserUpdatedValue;
-    public byte Maximum { get; set; }
-    public byte NumberOfStarsThatAreChecked { get; init; }
-    public bool IsHalfOfLastStarChecked { get; init; }
-    public byte NumberOfStarsThatAreUnchecked { get; init; }
     public IHelpDescriptionOfFormElement HelpDescriptionOfFormElement { get; private set; }
-    
     public string Description { get; init; }
-    public byte Minimum { get; set; }
-    public byte Increment { get; set; }
+    public ushort Minimum { get; set; }
+    public ushort Value { get => (ushort)InternalValue; }
+    public ushort Maximum { get; set; }
+    public ushort Increment { get; set; }
     public bool IsVisible { get; set; }
     public bool IsEnabled { get; set; }
+
+    private float InternalValue { get; set; }
+
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
-        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<byte>(new ComponentBuilderConfiguration(this)
+        (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<ushort>(new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(StarInputControl),
             ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>
             {
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("CountOfStarsToDisplayProperty", 5, nameof(Maximum), typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Minimum", Minimum, nameof(Minimum), typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Increment", Increment, nameof(Increment), typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Value", Value, nameof(Value), typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("IsVisible", IsVisible, nameof(IsVisible), typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("IsEnabled", IsEnabled, nameof(IsEnabled), typeof(StarInput))
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MinimumProperty", Minimum,"Minimum", typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MaximumProperty", Maximum, "Maximum", typeof(StarInput)),
+                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("CurrentValueProperty", InternalValue, nameof(InternalValue), typeof(StarInput)),
             }
 
         }, this);
@@ -50,7 +46,7 @@ public class StarInput : IStarInput
 
     public void TryToAddChild(IFormElement child)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
 
     
@@ -62,5 +58,22 @@ public class StarInput : IStarInput
     public void CloseDescription()
     {
         throw new NotImplementedException();
+    }
+
+    public ushort GetNumberOfStarsThatAreChecked()
+    {
+        return Value;
+    }
+
+    public bool IsHalfOfLastStarChecked()
+    {
+        return InternalValue % 1 == 0.5f;
+    }
+
+    public ushort GetNumberOfStarsThatAreUnchecked()
+    {
+        if(Maximum >= Value) 
+            return (ushort)(Maximum - Value);
+        throw new InvalidOperationException("Value is higher than Maximum");
     }
 }

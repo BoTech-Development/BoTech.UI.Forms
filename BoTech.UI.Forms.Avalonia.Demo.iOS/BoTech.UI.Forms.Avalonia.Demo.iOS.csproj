@@ -4,13 +4,6 @@
         <TargetFramework>net10.0-ios</TargetFramework>
         <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
         <Nullable>enable</Nullable>
-        <Version>1.0.5-alpha</Version>
-        <Copyright>All Rights Reserved!</Copyright>
-        <PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
-        <PackageIcon>BoTechLogoSmall.png</PackageIcon>
-        <Authors>www.botech.dev</Authors>
-        <AssemblyVersion>1.0.5.0</AssemblyVersion>
-        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

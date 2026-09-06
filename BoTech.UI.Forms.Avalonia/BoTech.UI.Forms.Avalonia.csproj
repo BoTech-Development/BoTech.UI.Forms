@@ -5,13 +5,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Title>BoTech.UI.Forms.Avalonia</Title>
-        <Version>1.0.6-alpha</Version>
-        <Copyright>All Rights Reserved!</Copyright>
-        <PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
-        <PackageIcon>BoTechLogoSmall.png</PackageIcon>
-        <Authors>www.botech.dev</Authors>
-        <AssemblyVersion>1.0.6.0</AssemblyVersion>
-        <RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

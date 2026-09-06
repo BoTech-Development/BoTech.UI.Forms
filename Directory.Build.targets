@@ -1,0 +1,13 @@
+<Project>
+	<PropertyGroup>
+		<Version>1.0.7-alpha</Version>
+		<AssemblyVersion>1.0.7.0</AssemblyVersion>
+		<FileVersion>1.0.7.0</FileVersion>
+
+		<Authors>www.botech.dev</Authors>
+		<Copyright>All Rights Reserved!</Copyright>
+		<PackageProjectUrl>https://www.botech.dev</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/BoTech-Development/BoTech.UI.Forms/</RepositoryUrl>
+		<PackageIcon>BoTechLogoSmall.png</PackageIcon>
+	</PropertyGroup>
+</Project>

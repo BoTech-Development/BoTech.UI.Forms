@@ -26,13 +26,8 @@ public class StarInputControl : TemplatedControl
 
     public byte Maximum
     {
-        get =>
-            GetValue(MaximumProperty);
-        set
-        {
-            SetValue(MaximumProperty, value); 
-            InitializeStars();
-        }
+        get => GetValue(MaximumProperty);
+        set => SetValue(MaximumProperty, value); 
     }
 
     public static readonly StyledProperty<byte> MinimumProperty =
@@ -40,13 +35,8 @@ public class StarInputControl : TemplatedControl
 
     public byte Minimum
     {
-        get =>
-            GetValue(MinimumProperty);
-        set
-        {
-            SetValue(MinimumProperty, value);
-            InitializeStars();
-        }
+        get => GetValue(MinimumProperty);
+        set => SetValue(MinimumProperty, value);
     }
 
 
@@ -63,13 +53,22 @@ public class StarInputControl : TemplatedControl
     {
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == MaximumProperty || change.Property == MinimumProperty)
+        {
+            InitializeStars();
+        }
+    }
+
     private void InitializeStars()
     {
         List<StarItem> starsToDisplay = new List<StarItem>();
         for (int i = 0; i < Maximum; i++)
         {
             StarItem star;
-            if (i <= Minimum)
+            if (i < Minimum)
                 star = StarItem.CreateConstantNotEditableStar(this, StarStatus.FullFilled);
             else
                 star = new StarItem(this, StarStatus.Border);
@@ -85,40 +84,40 @@ public class StarInputControl : TemplatedControl
         UpdateStarSelection(countOfStarsToUpdate, NextStatus(onClickStar.Status));
     }
 
-    private void UpdateStarSelection(int countOfFilledStars, StarStatus lastStarStatus)
+    private void UpdateStarSelection(int countOfFilledStars, StarStatus nextStarStatus)
     {
-        UpdateValue(countOfFilledStars, lastStarStatus);
-        UpdateValueVisually(countOfFilledStars, lastStarStatus);
+        UpdateValue(countOfFilledStars, nextStarStatus);
+        UpdateValueVisually(countOfFilledStars, nextStarStatus);
     }
 
-    private void UpdateValue(int countOfFilledStars, StarStatus lastStarStatus)
+    private void UpdateValue(int countOfFilledStars, StarStatus nextStarStatus)
     {
-        if (lastStarStatus == StarStatus.FullFilled)
+        if (nextStarStatus == StarStatus.FullFilled)
         {
             CurrentValue = countOfFilledStars + 1;
         }
-        else if (lastStarStatus == StarStatus.HalfFilled)
+        else if (nextStarStatus == StarStatus.HalfFilled)
         {
             CurrentValue = countOfFilledStars + 0.5f;
         }
         else
         {
-            CurrentValue = 0;
+            CurrentValue = Minimum;
         }
         Console.WriteLine($"CurrentValue: {CurrentValue}; countOfFilledStars: {countOfFilledStars}");
     }
-    private void UpdateValueVisually(int countOfFilledStars, StarStatus lastStarStatus)
+    private void UpdateValueVisually(int countOfFilledStars, StarStatus nextStarStatus)
     {
         StarStatus newStatus = StarStatus.Border;
-        if(lastStarStatus == StarStatus.FullFilled || lastStarStatus == StarStatus.HalfFilled) 
+        if(nextStarStatus == StarStatus.FullFilled || nextStarStatus == StarStatus.HalfFilled) // evaluate the status of the stars before the clicked star
             newStatus = StarStatus.FullFilled;
         // Fill all before if necessary
-        for (int i = 0; i <= countOfFilledStars - 1; i++)
+        for (int i = Minimum; i <= countOfFilledStars - 1; i++)
         {
             StarsToDisplay[i].Status = newStatus;
         }
         // fill clicked when necessary
-        StarsToDisplay[countOfFilledStars].Status = lastStarStatus;
+        StarsToDisplay[countOfFilledStars].Status = nextStarStatus;
         // clear all after if there are any stars
         for (int i = countOfFilledStars + 1; i < Maximum; i++)
         {

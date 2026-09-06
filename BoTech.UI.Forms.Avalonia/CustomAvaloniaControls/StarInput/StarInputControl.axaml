@@ -11,7 +11,6 @@
         <Setter Property="Template">
             <ControlTemplate x:DataType="controls:StarInputControl">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>Stars:</TextBlock>
                     <ItemsControl ItemsSource="{TemplateBinding  StarsToDisplay}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

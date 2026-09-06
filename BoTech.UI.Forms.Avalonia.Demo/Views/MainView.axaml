@@ -211,9 +211,7 @@
             </Button>
         </StackPanel>
         
-       <!-- <starInput:StarInputControl Minimum="1"/>-->
-        <TextBlock Text="Binding Test:" />
-        <ContentControl Content="{Binding Content}" />
+       <!-- <starInput:StarInputControl Minimum="1" Maximum="10"/>-->
         <TextBlock Text="BoTech.UI.Forms test:" />
         <Button Command="{Binding OnOpenDescription}">
             Open all Description Blocks

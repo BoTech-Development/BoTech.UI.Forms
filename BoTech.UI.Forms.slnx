@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Projektmappenelemente/">
+    <File Path="Directory.Build.targets" />
+  </Folder>
   <Project Path="BoTech.UI.Forms.Avalonia.Demo.Android/BoTech.UI.Forms.Avalonia.Demo.Android.csproj">
     <Deploy />
   </Project>
