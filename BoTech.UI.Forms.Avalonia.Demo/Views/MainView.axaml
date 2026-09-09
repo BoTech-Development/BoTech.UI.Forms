@@ -5,7 +5,6 @@
              xmlns:vm="using:BoTech.UI.Forms.Avalonia.Demo.ViewModels"
              xmlns:starInput="clr-namespace:BoTech.UI.Forms.Avalonia.CustomAvaloniaControls.StarInput;assembly=BoTech.UI.Forms.Avalonia"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BoTech.UI.Forms.Avalonia.Demo.Views.MainView"
              x:DataType="vm:MainViewModel">
     <Design.DataContext>
@@ -14,8 +13,33 @@
         <vm:MainViewModel />
     </Design.DataContext>
     <StackPanel>
-
-
+        <GroupBox>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                    <avalonia:MaterialIcon Kind="Person" IconSize="32"></avalonia:MaterialIcon>
+                    <TextBlock Text="Personal Info" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel Spacing="8">
+                <CheckBox Content="Enable logging" />
+                <CheckBox Content="Verbose output" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox>
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                    <avalonia:MaterialIcon Kind="Person" IconSize="32"></avalonia:MaterialIcon>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Personal Info" FontWeight="Bold" />
+                        <TextBlock Text="We need some personal Info to verify your identity." FontSize="14" FontWeight="Medium" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel Spacing="8">
+                <CheckBox Content="Enable logging" />
+                <CheckBox Content="Verbose output" />
+            </StackPanel>
+        </GroupBox>
         <StackPanel Orientation="Horizontal">
             <Button Margin="0,0,5,0">
                 <avalonia:MaterialIcon Kind="ArrowLeftBoldCircleOutline" IconSize="24" />

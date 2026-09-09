@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.Json.Serialization;
+using BoTech.UI.Forms.Controls;
 
 namespace BoTech.UI.Forms.Rendering;
 
@@ -51,11 +52,11 @@ public class ComponentBuilderAttributeConfiguration
     /// When the property should be set to a control.
     /// It is necessary to build the Control too.
     /// </summary>
-    public IComponentBuilderConfiguration? ControlValueConfig { get; init; }
+    public IFormElement? ControlValueConfig { get; init; }
     /// <summary>
     /// true when the user wants to create a component and insert it into a specific property in the current Component.
     /// </summary>
-    public bool HasAnotherControlAsValue => AttributeValue is IComponentBuilderConfiguration && ControlValueConfig != null;
+    public bool HasAnotherControlAsValue => AttributeValue is IFormElement && ControlValueConfig != null;
     /// <summary>
     /// true when the attribute should be a binding with mode two-way.
     /// </summary>
@@ -68,7 +69,7 @@ public class ComponentBuilderAttributeConfiguration
         TypeWhereTheBindingPropertyIsDeclared = typeWhereTheBindingPropertyIsDeclared;
         NameOfBindingProperty = nameOfBindingProperty;
     }
-    private ComponentBuilderAttributeConfiguration(string attributeName, IComponentBuilderConfiguration attributeValue)
+    private ComponentBuilderAttributeConfiguration(string attributeName, IFormElement attributeValue)
     {
         AttributeName =  attributeName;
         ControlValueConfig = attributeValue;
@@ -83,7 +84,7 @@ public class ComponentBuilderAttributeConfiguration
     /// <param name="controlValueConfig">the value to set</param>
     /// <returns>the config which will be apllied with the <see cref="IComponentBuilder{TControlTypeBase}"/></returns>
     public static ComponentBuilderAttributeConfiguration CreateConstantAttributeWithControlAsValue(string attributeName,
-        IComponentBuilderConfiguration controlValueConfig)
+        IFormElement controlValueConfig)
     {
         return new ComponentBuilderAttributeConfiguration(attributeName, controlValueConfig);
     }

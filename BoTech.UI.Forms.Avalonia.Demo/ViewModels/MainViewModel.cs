@@ -15,21 +15,10 @@ namespace BoTech.UI.Forms.Avalonia.Demo.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
-    public Control Content { get; set; }
     public Control Form { get; set; }
     public ReactiveCommand<RxVoid, RxVoid> OnOpenDescription { get; set; }
     public MainViewModel()
     {
-        
-        TextBox box = new TextBox();
-        var binding = new Binding("Greeting")
-        {
-            Mode = BindingMode.TwoWay,
-        };
-        box.Bind(TextBox.TextProperty, binding);
-        Content = box;
-        
         VisualSurface surface = new VisualSurface();
         Stack stackPanel = new Stack()
         {
@@ -91,6 +80,13 @@ public class MainViewModel : ViewModelBase
             Maximum = 10,
             Minimum = 4,
         };
+
+        Group box = new Group()
+        {
+            Title = "Login",
+            SubTitle = "please enter valid credentials to get access"
+        };
+
         
         timeInput.SetToCurrentTime();
         stackPanel.Children.Add(textInput);
@@ -100,6 +96,7 @@ public class MainViewModel : ViewModelBase
         stackPanel.Children.Add(dateTimeInput);
         stackPanel.Children.Add(numberInput);
         stackPanel.Children.Add(startInput);
+        stackPanel.Children.Add(box);
         OnOpenDescription = ReactiveCommand.Create(() =>
         {
             textInput.OpenDescription();

@@ -3,17 +3,17 @@
 public interface IComponentBuilderConfigurationDeserializer<T> where T : IComponentBuilderConfiguration
 {
     /// <summary>
-    /// Deserializes a json string to an implementation of IComponentBuilderConfiguration
+    /// Deserializes an xml string to an implementation of IComponentBuilderConfiguration
     /// </summary>
-    /// <param name="json">The json to deserialize</param>
+    /// <param name="xml">The xml to deserialize</param>
     /// <returns>the new instance.</returns>
-    public static abstract T DeserializeFromString(string json);
+    public static abstract T DeserializeFromString(string xml);
     /// <summary>
     /// Loads the given resource:
     ///     Resources should have the following name "<DefaultName>.<Folder>.<FileName>"
-    /// and parses the json string to a IComponentBuilderConfiguration implementation
+    /// and parses the xml string to a IComponentBuilderConfiguration implementation
     /// </summary>
-    /// <param name="fullResourceName">The full name of the resource where the json string is located</param>
+    /// <param name="fullResourceName">The full name of the resource where the xml string is located</param>
     /// <returns>the new instance.</returns>
     public static abstract T DeserializeFromResourceFile(string fullResourceName);
 }

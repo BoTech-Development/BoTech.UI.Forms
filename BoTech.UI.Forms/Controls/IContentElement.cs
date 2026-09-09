@@ -2,5 +2,5 @@
 
 public interface IContentElement : IFormElement
 {
-    public IFormElement Content { get; set; }
+    public IFormElement? Content { get; set; }
 }

@@ -15,6 +15,7 @@ public class Stack : BoTech.UI.Forms.Controls.Layout.IStack
     public BoTech.UI.Forms.Controls.Layout.Orientation Orientation { get; init; }
     public IComponentBuilderConfiguration BuildComponentBuilderConfigurationFromThis()
     {
+        // Children will be added during the visual tree build.
         var orientationCasted = Enum.Parse(typeof(Orientation), Orientation.ToString());
         return new ComponentBuilderConfiguration(this)
         {

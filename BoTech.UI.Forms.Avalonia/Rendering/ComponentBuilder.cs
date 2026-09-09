@@ -45,7 +45,7 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
 
     private void BuildChildrenOfFormElementAndAddToParent(IFormElement formElement, AvaloniaObject parentControl)
     {
-        if (formElement is IContentElement contentElement)
+        if (formElement is IContentElement contentElement && contentElement.Content is not null)
         {
             AvaloniaObject childControl = BuildSpecificComponentFromConfigAndChildren(contentElement.Content, contentElement.Content.BuildComponentBuilderConfigurationFromThis());
             TryToAddChildControlToParentControl(parentControl, childControl);

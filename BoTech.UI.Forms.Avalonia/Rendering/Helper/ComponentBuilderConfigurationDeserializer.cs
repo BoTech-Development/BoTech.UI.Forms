@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
 using System.Text.Json;
 using BoTech.UI.Forms.Rendering.Helper;
+using BoTech.XmlParser;
 
 namespace BoTech.UI.Forms.Avalonia.Rendering.Helper;
 
 public class ComponentBuilderConfigurationDeserializer : IComponentBuilderConfigurationDeserializer<ComponentBuilderConfiguration>
 {
-    public static ComponentBuilderConfiguration DeserializeFromString(string json)
+    public static ComponentBuilderConfiguration DeserializeFromString(string xml)
     {
-        ComponentBuilderConfiguration? result = JsonSerializer.Deserialize<ComponentBuilderConfiguration>(json);
+        ComponentBuilderConfiguration? result = (ComponentBuilderConfiguration)new XmlDeserializer().Deserialize(xml);
         if (result == null) 
-            throw new InvalidOperationException($"Could not deserialize '{json}' to build component builder configuration.");
+            throw new InvalidOperationException($"Could not deserialize '{xml}' to build component builder configuration.");
         return result;
     }
 
