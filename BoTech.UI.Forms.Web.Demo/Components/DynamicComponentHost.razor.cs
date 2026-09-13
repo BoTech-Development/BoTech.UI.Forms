@@ -10,7 +10,7 @@ public partial class DynamicComponentHost : ComponentBase
    //private bool _shouldRender = false;
     [Parameter] public RenderTreeConfig Config { get; set; } = new RenderTreeConfig(); //{ get => _renderTreeConfig; set => SetConfig(value); }
     
-    public void AddAttribute(ComponentBuilderAttributeConfiguration attributeConfiguration)
+    public void AddAttribute(IComponentBuilderAttributeConfiguration attributeConfiguration)
     {
         if (attributeConfiguration.IsBindingProperty)
         {
@@ -22,7 +22,7 @@ public partial class DynamicComponentHost : ComponentBase
         }
         
     }
-    private void AddBindingProperty(ComponentBuilderAttributeConfiguration attributeConfiguration)
+    private void AddBindingProperty(IComponentBuilderAttributeConfiguration attributeConfiguration)
     {
         Console.WriteLine("AddBindingProperty");
         // Check if the property with the given name has an onChanged Event defined in the given componenttype

@@ -32,11 +32,11 @@ public class StarInput : IStarInput
         (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<ushort>(new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(StarInputControl),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>
             {
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MinimumProperty", Minimum,"Minimum", typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MaximumProperty", Maximum, "Maximum", typeof(StarInput)),
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("CurrentValueProperty", InternalValue, nameof(InternalValue), typeof(StarInput)),
+                ComponentAttributeFactory.CreateBindingAttribute("MinimumProperty", Minimum,"Minimum", typeof(StarInput)),
+                ComponentAttributeFactory.CreateBindingAttribute("MaximumProperty", Maximum, "Maximum", typeof(StarInput)),
+                ComponentAttributeFactory.CreateBindingAttribute("CurrentValueProperty", InternalValue, nameof(InternalValue), typeof(StarInput)),
             }
 
         }, this);

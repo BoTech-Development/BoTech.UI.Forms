@@ -84,7 +84,8 @@ public class MainViewModel : ViewModelBase
         Group box = new Group()
         {
             Title = "Login",
-            SubTitle = "please enter valid credentials to get access"
+            SubTitle = "please enter valid credentials to get access",
+            Content = textInput
         };
 
         

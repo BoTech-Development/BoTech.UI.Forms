@@ -12,6 +12,6 @@ public class ComponentBuilderConfiguration(IFormElement configurationFor) : ICom
     public Guid Id { get; init; } = Guid.NewGuid();
     public IFormElement ConfigurationForFormElement { get; init; } = configurationFor;
     public Type ComponentType { get; init; }
-    public List<ComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; } = new List<ComponentBuilderAttributeConfiguration>();
+    public List<IComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; } = new List<IComponentBuilderAttributeConfiguration>();
     public List<IComponentBuilderConfiguration> Children { get; set; } = new List<IComponentBuilderConfiguration>();
 }

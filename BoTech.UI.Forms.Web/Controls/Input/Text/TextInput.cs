@@ -26,18 +26,18 @@ public class TextInput : ITextInput
         return new ComponentBuilderConfiguration()
         {
             ComponentType = typeof(MudStack),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Row", true)
+                AComponentBuilderAttributeConfiguration.CreateConstantAttribute("Row", true)
             },
             Children = new List<IComponentBuilderConfiguration>()
             {
                 new ComponentBuilderConfiguration()
                 {
                     ComponentType = typeof(MudTextField<string>),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("HelperText", "Some Name")
+                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("HelperText", "Some Name")
                     }
                 },
                 new HelpDescriptionOfFormElement()

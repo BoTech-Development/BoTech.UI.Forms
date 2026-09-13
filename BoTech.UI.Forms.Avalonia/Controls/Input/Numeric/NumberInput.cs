@@ -56,12 +56,12 @@ public class NumberInput<T> : INumberInput<T> where T : INumber<T>
             new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(NumericUpDown),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("ValueProperty", Value, "Value", typeof(NumberInput<T>)),
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("IncrementProperty", Increment, "Increment", typeof(NumberInput<T>)),
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MinimumProperty", Minimum, "Minimum", typeof(NumberInput<T>)),
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("MaximumProperty", Maximum, "Maximum", typeof(NumberInput<T>)),
+                    ComponentAttributeFactory.CreateBindingAttribute("ValueProperty", Value, "Value", typeof(NumberInput<T>)),
+                    ComponentAttributeFactory.CreateBindingAttribute("IncrementProperty", Increment, "Increment", typeof(NumberInput<T>)),
+                    ComponentAttributeFactory.CreateBindingAttribute("MinimumProperty", Minimum, "Minimum", typeof(NumberInput<T>)),
+                    ComponentAttributeFactory.CreateBindingAttribute("MaximumProperty", Maximum, "Maximum", typeof(NumberInput<T>)),
                 }
             }
         }, this);

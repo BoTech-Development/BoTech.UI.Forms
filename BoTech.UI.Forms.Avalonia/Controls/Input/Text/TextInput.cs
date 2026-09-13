@@ -45,12 +45,12 @@ public class TextInput : ITextInput
         (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<string>(new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(TextBox),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("TextProperty", Value, "Value", typeof(TextInput)),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("AcceptsReturn", IsMultiline),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("IsReadOnly", IsEnabled),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center)
+                ComponentAttributeFactory.CreateBindingAttribute("TextProperty", Value, "Value", typeof(TextInput)),
+                ComponentAttributeFactory.CreateConstantAttribute("AcceptsReturn", IsMultiline),
+                ComponentAttributeFactory.CreateConstantAttribute("IsReadOnly", IsEnabled),
+                ComponentAttributeFactory.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center)
             }
         }, this);
         HelpDescriptionOfFormElement = helpInfo;

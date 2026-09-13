@@ -33,20 +33,20 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
         {
             Id = _idOfDescriptionButton,
             ComponentType = typeof(Button),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttributeWithControlAsValue("Flyout", new ComponentBuilderConfiguration(this)
+                ComponentAttributeFactory.CreateConstantAttributeWithControlAsValue("Flyout", new ComponentBuilderConfiguration(this)
                 {
                     Id = _idOfDescriptionFlyout,
                     ComponentType  = typeof(Flyout),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttributeWithControlAsValue("Content", new ComponentBuilderConfiguration(this)
+                        ComponentAttributeFactory.CreateConstantAttributeWithControlAsValue("Content", new ComponentBuilderConfiguration(this)
                         {
                             ComponentType  = typeof(TextBlock),
-                            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                             {
-                                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Text", HelpText),
+                                ComponentAttributeFactory.CreateConstantAttribute("Text", HelpText),
                             }
                         })
                     }
@@ -57,11 +57,11 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
                 new ComponentBuilderConfiguration(this)
                 {
                     ComponentType = typeof(MaterialIcon),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Kind", MaterialIconKind.HelpCircleOutline),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Height", 24),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Width", 24)
+                        ComponentAttributeFactory.CreateConstantAttribute("Kind", MaterialIconKind.HelpCircleOutline),
+                        ComponentAttributeFactory.CreateConstantAttribute("Height", 24),
+                        ComponentAttributeFactory.CreateConstantAttribute("Width", 24)
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
     
     public void TryToAddChild(IFormElement child)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException();
     }
     
     public void OpenDescription()

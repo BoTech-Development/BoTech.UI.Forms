@@ -20,9 +20,9 @@ public class Stack : BoTech.UI.Forms.Controls.Layout.IStack
         return new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", orientationCasted),
+                ComponentAttributeFactory.CreateConstantAttribute("Orientation", orientationCasted),
             }
         };
     }

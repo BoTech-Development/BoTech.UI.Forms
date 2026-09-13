@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using BoTech.UI.Forms.Avalonia.Rendering;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Layout;
+using BoTech.UI.Forms.Controls.Text;
 using BoTech.UI.Forms.Models;
 using BoTech.UI.Forms.Rendering;
 using TextBlock = BoTech.UI.Forms.Avalonia.Controls.Text.TextBlock;
@@ -62,11 +63,14 @@ namespace BoTech.UI.Forms.Avalonia.Controls.Layout
             };
             _titleTextBlock = new TextBlock()
             {
-                Text = Title
+                Text = Title,
+                FontWeight = FontWeight.Bold
             };
             _subTitleTextBlock = new TextBlock()
             {
-                Text = SubTitle
+                Text = SubTitle,
+                FontSize = 14,
+                FontWeight = FontWeight.Medium
             };
             textStackPanel.TryToAddChild(_titleTextBlock);
             textStackPanel.TryToAddChild(_subTitleTextBlock);
@@ -74,9 +78,9 @@ namespace BoTech.UI.Forms.Avalonia.Controls.Layout
             return new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(GroupBox),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttributeWithControlAsValue("Header", _titleTextBlock)
+                    ComponentAttributeFactory.CreateConstantAttributeWithControlAsValue("Header", textStackPanel)
                 }
             };
         }
@@ -95,9 +99,9 @@ namespace BoTech.UI.Forms.Avalonia.Controls.Layout
             return new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(GroupBox),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttributeWithControlAsValue("Header", textStackPanel)
+                    ComponentAttributeFactory.CreateConstantAttributeWithControlAsValue("Header", textStackPanel)
                 }
             };
         }

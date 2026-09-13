@@ -12,17 +12,20 @@ public interface IComponentBuilderConfiguration
     /// <summary>
     /// Value for serializing <see cref="ComponentType"/>
     /// </summary>
-   // public string FullComponentTypeName { get; init; }
+    //public string FullComponentTypeName { get; init; }
+    /// <summary>
+    /// The instance of the wrapper class where this config is for.
+    /// </summary>
     public IFormElement ConfigurationForFormElement { get; init; }
     /// <summary>
-    /// The Component Type that should be instantiated by the Componentbuilder
+    /// The Component Type that should be instantiated by the Component builder
     /// </summary>
    //[JsonIgnore]
     public Type ComponentType { get; init; }
     /// <summary>
     /// Properties that should be injected into the instance of the given ComponentType
     /// </summary>
-    public List<ComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; }
+    public List<IComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; }
     /// <summary>
     /// All visual children of this config.
     /// </summary>

@@ -48,7 +48,7 @@ public class ComponentBuilder : IComponentBuilder<RenderFragment>
         Console.WriteLine($"Current Html-Element type to build: {config.ComponentType}");
         sequenceCounter += 1;
         builder.OpenElement(sequenceCounter,Enum.GetName(config.HtmlElementComponent).ToLower());
-        foreach (ComponentBuilderAttributeConfiguration attributeConfiguration in config.ComponentAttributes)
+        foreach (IComponentBuilderAttributeConfiguration attributeConfiguration in config.ComponentAttributes)
         {
             Console.WriteLine($"└─>Adding Attribute {attributeConfiguration.AttributeName}");
             builder.AddAttribute(sequenceCounter, attributeConfiguration.AttributeName, attributeConfiguration.AttributeValue);
@@ -63,7 +63,7 @@ public class ComponentBuilder : IComponentBuilder<RenderFragment>
         Console.WriteLine($"Current Component type to build: {config.ComponentType}");
         sequenceCounter += 1;
         builder.OpenComponent(sequenceCounter, config.ComponentType);
-        foreach (ComponentBuilderAttributeConfiguration attributeConfiguration in config.ComponentAttributes)
+        foreach (IComponentBuilderAttributeConfiguration attributeConfiguration in config.ComponentAttributes)
         {
             
             if (attributeConfiguration.IsBindingProperty)
@@ -106,7 +106,7 @@ public class ComponentBuilder : IComponentBuilder<RenderFragment>
             builder.AddContent(childSequenceCounter, BuildComponentFromConfig(childConfig, childSequenceCounter, currentChild));
         }
     }
-    private void AddAttributeWithBinding(ComponentBuilderAttributeConfiguration attribute, RenderTreeBuilder builder, IFormElement instanceOfCurrentFormElement, int sequenceCounter)
+    private void AddAttributeWithBinding(IComponentBuilderAttributeConfiguration attribute, RenderTreeBuilder builder, IFormElement instanceOfCurrentFormElement, int sequenceCounter)
     {
         Console.WriteLine($"└──>trying to find property with name {attribute.NameOfBindingProperty} in the class {attribute.TypeWhereTheBindingPropertyIsDeclared} with obj: {instanceOfCurrentFormElement}");
         // Get the field/property via reflection

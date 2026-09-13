@@ -33,46 +33,46 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
                 new ComponentBuilderConfiguration()
                 {
                     ComponentType = typeof (MudToggleIconButton),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Icon", Icons.Material.Filled.Info),
-                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ToggledIcon", Icons.Material.Filled.Close),
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Toggled", false, nameof(_isOpened), this.GetType())
+                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("Icon", Icons.Material.Filled.Info),
+                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("ToggledIcon", Icons.Material.Filled.Close),
+                        AComponentBuilderAttributeConfiguration.CreateBindingAttribute("Toggled", false, nameof(_isOpened), this.GetType())
                     }
                 },
                 new ComponentBuilderConfiguration()
                 {
                     ComponentType = typeof (MudPopover),
-                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                    ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                     {
-                        ComponentBuilderAttributeConfiguration.CreateBindingAttribute("Open", false, nameof(_isOpened), this.GetType())
+                        AComponentBuilderAttributeConfiguration.CreateBindingAttribute("Open", false, nameof(_isOpened), this.GetType())
                     },
                     Children = new List<IComponentBuilderConfiguration>()
                     {
                         new ComponentBuilderConfiguration()
                         {
                             ComponentType = typeof (MudStack),
-                            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                            ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                             {
-                                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Row", true)
+                                AComponentBuilderAttributeConfiguration.CreateConstantAttribute("Row", true)
                             },
                             Children = new List<IComponentBuilderConfiguration>()
                             {
                                 new ComponentBuilderConfiguration()
                                 {
                                     ComponentType = typeof (MudAlert),
-                                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                                    ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                                     {
-                                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Severity", Severity.Info),
+                                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("Severity", Severity.Info),
                                     },
                                     Children = new List<IComponentBuilderConfiguration>()
                                     {
                                         new ComponentBuilderConfiguration()
                                         {
                                             ComponentType = typeof (MudText),
-                                            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                                            ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                                             {
-                                                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ChildContent", HelpText),
+                                                AComponentBuilderAttributeConfiguration.CreateConstantAttribute("ChildContent", HelpText),
                                             }
                                         }
                                     }
@@ -80,10 +80,10 @@ public class HelpDescriptionOfFormElement : IHelpDescriptionOfFormElement
                                 new ComponentBuilderConfiguration()
                                 {
                                     ComponentType = typeof (MudIconButton),
-                                    ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                                    ComponentAttributes = new List<AComponentBuilderAttributeConfiguration>()
                                     {
-                                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Icon", Icons.Material.Filled.Close),
-                                        ComponentBuilderAttributeConfiguration.CreateConstantAttribute("OnClick", () => ChangeOpenStatus(false)),
+                                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("Icon", Icons.Material.Filled.Close),
+                                        AComponentBuilderAttributeConfiguration.CreateConstantAttribute("OnClick", () => ChangeOpenStatus(false)),
                                     }
                                 }
                             }

@@ -44,9 +44,9 @@ public class DateInput : IDateInput
             new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(DatePicker),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", Value, "SelectedDateTime", typeof(DateInput))
+                    ComponentAttributeFactory.CreateBindingAttribute("SelectedDateProperty", Value, "SelectedDateTime", typeof(DateInput))
                 }
             },this);
         HelpDescriptionOfFormElement = helpInfo;

@@ -40,11 +40,11 @@ public class SearchTextInput : ISearchTextInput
         (IComponentBuilderConfiguration mainConfig, IHelpDescriptionOfFormElement helpInfo) = new InputLayoutBuilder().BuildStandardLayoutConfiguration<string>(new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(AutoCompleteBox),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedItem", Value, "Value", typeof(TextInput)),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemsSource",  ItemSource),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
+                ComponentAttributeFactory.CreateBindingAttribute("SelectedItem", Value, "Value", typeof(TextInput)),
+                ComponentAttributeFactory.CreateConstantAttribute("ItemsSource",  ItemSource),
+                ComponentAttributeFactory.CreateConstantAttribute("VerticalAlignment", VerticalAlignment.Center),
                 /*  ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ItemFilter", (string search, string item) =>
                 {
                     if (string.IsNullOrEmpty(search) || string.IsNullOrWhiteSpace(search))

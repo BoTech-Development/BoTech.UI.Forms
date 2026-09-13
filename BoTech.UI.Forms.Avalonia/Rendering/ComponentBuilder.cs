@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Data.Converters;
 using BoTech.UI.Forms.Controls;
 using BoTech.UI.Forms.Controls.Layout;
+using BoTech.UI.Forms.Converter;
 using BoTech.UI.Forms.Rendering;
 using BoTech.UI.Forms.Services;
 
@@ -79,15 +83,27 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
     }
     private void AddComponentAttributesToControl(AvaloniaObject control, IComponentBuilderConfiguration config, IFormElement instanceOfRootFormElement)
     {
-        foreach (ComponentBuilderAttributeConfiguration attributeConfig in config.ComponentAttributes)
+        foreach (IComponentBuilderAttributeConfiguration attributeConfig in config.ComponentAttributes)
         {
             if (attributeConfig.IsBindingProperty)
             {
                 AddBindingAttributeToControl(control, config.ComponentType, attributeConfig);
+                if (attributeConfig.AttributeValue != null)
+                {
+                    AddPrimitiveAttributeToControl(control, config.ComponentType, attributeConfig.AttributeName, attributeConfig.AttributeValue);
+                }
             }
             else if (attributeConfig.HasAnotherControlAsValue)
             {
-                AvaloniaObject controlAsValue = BuildSpecificComponentFromConfig(instanceOfRootFormElement, attributeConfig.ControlValueConfig);
+                AvaloniaObject controlAsValue;
+                if (attributeConfig.IsAnotherControlAFormElement)
+                {
+                    controlAsValue = BuildComponent(attributeConfig.FormElementAsValue!); // Checked by the if-clause
+                }
+                else
+                {
+                     controlAsValue = BuildSpecificComponentFromConfig(instanceOfRootFormElement, attributeConfig.ControlValueConfig);
+                }
                 AddPrimitiveAttributeToControl(control, config.ComponentType, attributeConfig.AttributeName, controlAsValue);
             }
             else
@@ -96,7 +112,7 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
             }
         }
     }
-    private void AddBindingAttributeToControl(AvaloniaObject controlInstance, Type typeOfControl, ComponentBuilderAttributeConfiguration config)
+    private void AddBindingAttributeToControl(AvaloniaObject controlInstance, Type typeOfControl, IComponentBuilderAttributeConfiguration config)
     {
         FieldInfo? avaloniaPropertyDescriptorPropertyInfo = typeOfControl.GetField(config.AttributeName);
         if (avaloniaPropertyDescriptorPropertyInfo != null)
@@ -117,11 +133,17 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
         }
     }
 
-    private Binding CreateBindingFromConfig(ComponentBuilderAttributeConfiguration config)
+    private Binding CreateBindingFromConfig(IComponentBuilderAttributeConfiguration config)
     {
+        if (config.TypeOfValueConverter is not null)
+            return new Binding(config.NameOfBindingProperty!)
+            {
+                FallbackValue = config.AttributeValue,
+                Converter = new ValueConverterWrapper(config.TypeOfValueConverter)
+            };
         return new Binding(config.NameOfBindingProperty!) // Null must be checked above this method.
         {
-            FallbackValue = config.AttributeValue
+            FallbackValue = config.AttributeValue,
         };
     }
     private void AddPrimitiveAttributeToControl(AvaloniaObject control, Type typeOfControl, string propertyName, object? propertyValue)
@@ -129,5 +151,37 @@ public class ComponentBuilder : IComponentBuilder<AvaloniaObject>
         PropertyInfo? propertyToSet = typeOfControl.GetProperty(propertyName);
         if(propertyToSet == null) throw new ArgumentException($"The property with the given name ({propertyName}) doesn't exist in the given control type ({typeOfControl.FullName})");
         propertyToSet.SetValue(control, propertyValue);
+    }
+
+    private class ValueConverterWrapper : IValueConverter
+    {
+
+        private MethodInfo? _convertMethod;
+        private MethodInfo? _convertBackMethod;
+        public ValueConverterWrapper(Type typeOfTheUnderlyingConverter)
+        {
+            try
+            {
+                this._convertMethod = typeOfTheUnderlyingConverter.GetMethod("Convert", BindingFlags.Public | BindingFlags.Static);
+                this._convertBackMethod = typeOfTheUnderlyingConverter.GetMethod("ConvertBack", BindingFlags.Public | BindingFlags.Static);
+                if (this._convertBackMethod is null || this._convertMethod == null)
+                    throw new Exception(
+                        "Can not extract the methods Convert and ConvertBack from the given Type. Type might not be an IConverter<?,?>. Can not build component.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    "Can not extract the methods Convert and ConvertBack from the given Type. Type might not be an IConverter<?,?>. Can not build component. Inner error: " + ex);
+            }
+        }
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            return this._convertMethod.Invoke(null, new object?[]{ value });
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            return this._convertMethod.Invoke(null, new object?[] { value });
+        }
     }
 }

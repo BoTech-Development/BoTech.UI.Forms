@@ -22,7 +22,7 @@ public class ComponentBuilderConfiguration : IComponentBuilderConfiguration
     /// <summary>
     /// Properties that should be injected into the instance of the given ComponentType
     /// </summary>
-    public List<ComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; } = new();
+    public List<IComponentBuilderAttributeConfiguration> ComponentAttributes { get; init; } = new();
     /// <summary>
     /// All visual children of this config.
     /// </summary>

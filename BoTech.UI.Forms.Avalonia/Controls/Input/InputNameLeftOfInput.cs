@@ -19,12 +19,12 @@ public class InputNameLeftOfInput : IInputNameLeftOfInput
         return new ComponentBuilderConfiguration(this)
         {
             ComponentType = typeof(TextBlock),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Text", Name + ":"),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontSize", 18),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("FontWeight", FontWeight.SemiBold),
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("VerticalAlignment",
+                ComponentAttributeFactory.CreateConstantAttribute("Text", Name + ":"),
+                ComponentAttributeFactory.CreateConstantAttribute("FontSize", 18),
+                ComponentAttributeFactory.CreateConstantAttribute("FontWeight", FontWeight.SemiBold),
+                ComponentAttributeFactory.CreateConstantAttribute("VerticalAlignment",
                     VerticalAlignment.Center),
             }
         };

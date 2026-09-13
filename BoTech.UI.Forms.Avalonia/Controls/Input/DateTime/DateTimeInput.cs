@@ -56,19 +56,19 @@ public class DateTimeInput : IDateTimeInput
             new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(TimePicker),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", SelectedTime, "SelectedTime", typeof(DateTimeInput)),
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1)
+                    ComponentAttributeFactory.CreateBindingAttribute("SelectedTimeProperty", SelectedTime, "SelectedTime", typeof(DateTimeInput)),
+                    ComponentAttributeFactory.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
+                    ComponentAttributeFactory.CreateConstantAttribute("MinuteIncrement", 1)
                 }
             },
             new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(DatePicker),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedDateProperty", SelectedDate, "SelectedDate", typeof(DateTimeInput))
+                    ComponentAttributeFactory.CreateBindingAttribute("SelectedDateProperty", SelectedDate, "SelectedDate", typeof(DateTimeInput))
                 }
             }
         }, this);

@@ -44,11 +44,11 @@ public class TimeInput : ITimeInput
             new ComponentBuilderConfiguration(this)
             {
                 ComponentType = typeof(TimePicker),
-                ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+                ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
                 {
-                    ComponentBuilderAttributeConfiguration.CreateBindingAttribute("SelectedTimeProperty", Value, "SelectedTime", typeof(TimeInput)),
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
-                    ComponentBuilderAttributeConfiguration.CreateConstantAttribute("MinuteIncrement", 1)
+                    ComponentAttributeFactory.CreateBindingAttribute("SelectedTimeProperty", Value, "SelectedTime", typeof(TimeInput)),
+                    ComponentAttributeFactory.CreateConstantAttribute("ClockIdentifier", "24HourClock"),
+                    ComponentAttributeFactory.CreateConstantAttribute("MinuteIncrement", 1)
                 }
             }, this);
         HelpDescriptionOfFormElement = helpInfo;

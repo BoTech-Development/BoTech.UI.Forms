@@ -23,9 +23,9 @@ public class InputLayoutBuilder : IInputLayoutBuilder
         ComponentBuilderConfiguration mainConfig = new ComponentBuilderConfiguration(instanceOfControl)
         {
             ComponentType = typeof(StackPanel),
-            ComponentAttributes = new List<ComponentBuilderAttributeConfiguration>()
+            ComponentAttributes = new List<IComponentBuilderAttributeConfiguration>()
             {
-                ComponentBuilderAttributeConfiguration.CreateConstantAttribute("Orientation", Orientation.Horizontal),
+                ComponentAttributeFactory.CreateConstantAttribute("Orientation", Orientation.Horizontal),
             }
         };
         mainConfig.Children.Add(new InputNameLeftOfInput()
